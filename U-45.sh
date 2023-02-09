@@ -17,17 +17,15 @@ EOF
 
 BAR
 
-# Remove the SUID bit from the su command
+# su 명령에서 SUID 비트 제거
 sudo chmod u-s $(which su)
 
-# Remove group restriction for su command
+# su 명령에 대한 그룹 제한 제거
 sudo chgrp root $(which su)
 sudo chmod g+rwx $(which su)
 sudo chmod g-rxs $(which su)
 
-echo "The original state of the su command has been restored."
-
-
+INFO "su 명령의 원래 상태가 복원되었습니다."
 
 cat $result
 
