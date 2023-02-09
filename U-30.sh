@@ -8,8 +8,6 @@
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1
- 
- 
 
 BAR
 
@@ -25,22 +23,17 @@ EOF
 
 BAR
 
-
-# Start Sendmail service
+# Sendmail 서비스 재시작
 sudo service sendmail restart
 
-# Check if the service is running
-if [ $(systemctl is-active sendmail) == "active" ]; then
-  echo "Sendmail service has been successfully restarted"
+# Sendmail 서비스가 실행 중인지 확인합니다
+sendmail_status=$(ps -ef | grep sendmail | grep -v "grep")
+
+if [ "$sendmail_status" == "active" ]; then
+  INFO "Sendmail 서비스가 실행 중입니다."
 else
-  echo "Error starting the Sendmail service"
+  OK "Sendmail 서비스가 실행되고 있지 않습니다."
 fi
-
-
-
-
-
-
 
 cat $result
 
