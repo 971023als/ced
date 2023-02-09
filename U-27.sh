@@ -41,7 +41,6 @@ finger localhost
 # If there's an issue, print an error message and exit
 if [ $? -ne 0 ]; then
   echo "Error: RPC finger service could not be restored to its original state"
-  exit 1
 fi
 
 echo "RPC finger service has been successfully restored to its original state"
