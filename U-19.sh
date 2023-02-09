@@ -17,17 +17,17 @@ EOF
 BAR
 
 
-# Remove the changes made to the finger service configuration file
+# 핑거 서비스 구성 파일의 변경 사항을 제거합니다
 if [ -f /etc/xinetd.d/finger ]; then
-  rm /etc/xinetd.d/finger
+  sudo rm /etc/xinetd.d/finger
 fi
 
-# Restore the original finger service configuration file
+# 원래 핑거 서비스 구성 파일 복원
 if [ -f /etc/xinetd.d/finger.bak ]; then
-  mv /etc/xinetd.d/finger.bak /etc/xinetd.d/finger
+  sudo mv /etc/xinetd.d/finger.bak /etc/xinetd.d/finger
 fi
 
-echo "Finger service restored to its original state."
+INFO "핑거 서비스가 원래 상태로 복구되었습니다"
 
 
 cat $result
