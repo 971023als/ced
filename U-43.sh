@@ -26,9 +26,6 @@ cp /var/log/wtmp /var/log/btmp /var/log/lastlog /var/log/xferlog ~/backup/logs/
 # Backup configuration files
 cp function.sh ~/backup/config/
 
-# Run the original script
-./patch.sh
-
 # If there is a problem after running the script, restore the log files and configuration files from the backup directory
 cp ~/backup/logs/* /var/log/
 cp ~/backup/config/function.sh .
