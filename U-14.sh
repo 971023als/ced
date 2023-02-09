@@ -22,20 +22,22 @@ BAR
 
 
 
+# Backup files
+cp $HOME/.bashrc $HOME/.bashrc.bak
+cp $HOME/.bash_profile $HOME/.bash_profile.bak
+cp $HOME/.bash_aliases $HOME/.bash_aliases.bak
+
 files=( "$HOME/.bashrc" "$HOME/.bash_profile" "$HOME/.bash_aliases" )
 
-# Restore original permissions for specified files
-restore_permissions() {
-filename=$1
-original_permission=$(stat -c "%a" "$filename")
-sudo chmod "$original_permission" "$filename"
-INFO "Restored original permissions for $filename"
-}
-
 for file in "${files[@]}"; do
-if [ -e "$file" ]; then
-restore_permissions "$file"
-fi
+  if [ -e "$file" ]; then
+    chmod o-w "$file"
+    if [ $? -eq 0 ]; then
+      OK "$file 에서 다른 사용자에 대한 쓰기 권한이 제거되었습니다."
+    else
+      WARN "$file 에서 다른 사용자에 대한 쓰기 권한을 제거하지 못했습니다."
+    fi
+  fi
 done
 
 
