@@ -1,11 +1,6 @@
 #!/bin/bash
 
- 
-
 . function.sh
-
-
- 
 
 BAR
 
@@ -21,36 +16,34 @@ EOF
 
 BAR
 
-
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-# Get a list of users whose shell is set to /bin/false
+# 셸이 /bin/false로 설정된 사용자 목록 가져오기
 user_list=$(cat /etc/passwd | grep /bin/false | awk -F: '{print $1}')
 
-# Rotate the list of users
+# 사용자 목록
 for user in $user_list; do
-# Change the user shell to /bin/bash
-usermod -s /bin/bash $user
+# 사용자 셸을 /bin/bash로 변경합니다
+sudo usermod -s /bin/bash $user
 if [ $? -eq 0 ]; then
-INFO "Login is now enabled for user: $user."
+    INFO "이제 사용자: $user 에 대해 로그인이 활성화되었습니다."
 else
-OK "Unable to enable login for user: $user."
+    OK "사용자: $user 에 대한 로그인을 활성화할 수 없습니다."
 fi
 done
 
-# Get a list of recently deleted non-default accounts
+# 최근에 삭제된 기본 계정이 아닌 계정 목록 가져오기
 deleted_users=$(grep "Removing non-default account" $TMP1 | awk '{print $NF}')
 
-# Rotate the list of deleted users
+# 삭제된 사용자 목록 회전
 for user in $deleted_users; do
-INFO "Restoring non-default account: $user"
+    INFO "기본이 아닌 계정을 복원하는 중: $user"
 sudo useradd "$user"
 done
 
-OK "All non-default accounts have been restored."
-
+OK "기본값이 아닌 모든 계정이 복원되었습니다."
 
  
 cat $result
