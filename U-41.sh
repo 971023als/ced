@@ -28,13 +28,6 @@ file="/etc/httpd/conf/httpd.conf"
 sed -i 's#DocumentRoot /home/centos/newphp/#DocumentRoot /var/www/html#g' $file
 
 
-
-
-
-
-
-
-
 cat $result
 
 echo ; echo

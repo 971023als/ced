@@ -1,9 +1,6 @@
 #!/bin/bash
 
- 
-
 . function.sh 
-   
 
 BAR
 
@@ -19,22 +16,21 @@ EOF
 
 BAR
 
-
 TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
+# CentOS 6.9에 대한 저장소 사용
+sudo yum --enablerepo=C6.9-base list kernel-2.6.32-642*
 
-# Revert to the previous version of the system
-yum downgrade -y
+# CentOS 6.9용 커널 설치
+sudo yum install kernel-2.6.32-642.el6
 
-# Remove the installed patches
-yum remove -y $(cat /var/log/patch.log | awk '{print $6}' | xargs)
+# 시스템을 재부팅하여 변경 사항을 적용합니다
+sudo reboot
 
-# Clear the patch log file
-echo "" > /var/log/patch.log
-
-
+# 레드햇 릴리스 다운그레이드
+sudo yum --enablerepo=C6.9-base downgrade redhat-release
 
 
 
