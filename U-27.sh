@@ -16,14 +16,13 @@ EOF
 
 BAR
 
-
 # Remove the existing finger file in /etc/xinetd.d/
 if [ -f "/etc/xinetd.d/finger" ]; then
-rm /etc/xinetd.d/finger
+  sudo rm /etc/xinetd.d/finger
 fi
 
 # Recreate the original finger file
-echo "service finger
+sudo echo "service finger
 {
 socket_type = stream
 wait = no
@@ -33,7 +32,7 @@ disable = no
 }" > /etc/xinetd.d/finger
 
 # Restart the xinetd service to apply the changes
-service xinetd restart
+sudo service xinetd restart
 
 # Check if the finger service is working correctly
 finger localhost
