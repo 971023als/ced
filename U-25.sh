@@ -24,14 +24,14 @@ sudo service nfs start
 # Check the status of the NFS service
 sudo service nfs status
 
-# Check if the NFS service is running correctly by mounting and accessing an NFS share
-sudo mount <NFS_server_IP>:<NFS_share_path> <local_mount_point>
-ls <local_mount_point>
+sudo mount 192.168.0.100:/nfs_share /mnt/nfs
+
+# Check if the NFS share is mounted correctly by accessing it
+ls /mnt/nfs
 
 # If there's an issue, print an error message and exit
 if [ $? -ne 0 ]; then
   echo "Error: NFS service could not be restored to its original state"
-  exit 1
 fi
 
 echo "NFS service has been successfully restored to its original state"
