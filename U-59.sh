@@ -36,8 +36,6 @@ done
 # Remove the backup directory
 sudo rm -rf "$backup_files_dir"
 
-echo "Original state has been restored successfully."
-
 
 cat $result
 
