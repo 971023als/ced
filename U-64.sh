@@ -24,17 +24,11 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-
-
-
-# Backup the original /etc/ssh/sshd_config file
+# 원본 /etc/ssh/sshd_config 파일 백업
 sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
 
-# Restore the original /etc/ssh/sshd_config file
+# 원본 /etc/ssh/sshd_config 파일 복원
 sudo cp /etc/ssh/sshd_config.bak /etc/ssh/sshd_config
-
-# Remove the backup file
-sudo rm /etc/ssh/sshd_config.bak
 
 
 
