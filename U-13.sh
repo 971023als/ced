@@ -23,7 +23,7 @@ restore_permissions() {
 filename=$1
 original_permission=$(stat -c "%a" "$filename")
 sudo chmod "$original_permission" "$filename"
-INFO "Restored original permissions for $filename"
+INFO "다음에 대한 원래 사용 권한 복원 $filename"
 }
 
 # Restore original permissions for all specified files

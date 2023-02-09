@@ -15,18 +15,14 @@ cat << EOF >> $result
 EOF
 
 BAR
+# Backup files
+cp /etc/xinetd.conf /etc/xinetd.conf.bak
 
+# 파일 소유자를 "root" 사용자와 "root" 그룹으로 변경
+sudo chown root:root /etc/xinetd.conf
 
-ORIG_OWNER=$(stat -c "%U:%G" /etc/xinetd.conf)
-ORIG_PERMS=$(stat -c "%a" /etc/xinetd.conf)
-
-# Restore the original owner of the file
-sudo chown $ORIG_OWNER /etc/xinetd.conf
-
-# Restore the original permissions of the file
-sudo chmod $ORIG_PERMS /etc/xinetd.conf
-
-
+# 파일의 권한을 600으로 설정
+sudo chmod 600 /etc/xinetd.conf
 
 cat $result
 
