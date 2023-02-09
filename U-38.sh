@@ -20,21 +20,18 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-
-
 HTTPD_ROOT="/etc/httpd/conf/httpd.conf"
 UNWANTED_ITEMS="manual samples docs"
 
 for item in $UNWANTED_ITEMS
 do
 if [ ! -d "$HTTPD_ROOT/$item" ] && [ ! -f "$HTTPD_ROOT/$item" ]; then
-sudo cp -r "$HTTPD_ROOT/backup/$item" "$HTTPD_ROOT/$item"
-echo "$item has been restored to $HTTPD_ROOT"
+    sudo cp -r "$HTTPD_ROOT/backup/$item" "$HTTPD_ROOT/$item"
+    OK "$item 이 $HTTPD_ROOT 로 복원되었습니다."
+else
+    WARN "$item 이 $HTTPD_ROOT 로 복원 안 되었습니다."
 fi
 done
-
-
-
 
 cat $result
 
