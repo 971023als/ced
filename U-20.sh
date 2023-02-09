@@ -16,37 +16,30 @@ EOF
 
 BAR
 
-TMP1=`SCRIPTNAME`.log
+# vsftpd 구성 파일 백업
+cp /etc/vsftpd.conf /etc/vsftpd.conf.bak
 
->$TMP1  
-
-
-
-# Restore the FTP user
+# FTP 사용자 복원
 sudo useradd ftp
 
-# Set the path to the vsftpd.conf file
+# vsftpd.conf 파일의 경로 설정
 vsftpd_conf_file="/etc/vsftpd.conf"
 
-# Verify that the vsftpd.conf file exists.
+# vsftpd.conf 파일이 있는지 확인합니다.
 if [ -f $vsftpd_conf_file ]; then
-  # Remove the line "anonymous_enable=NO" (if present)
+  # "anonymous_enable=NO" 행을 제거합니다(있는 경우)
   sed -i '/^anonymous_enable=NO/d' $vsftpd_conf_file
 else
-  # File not found
-  INFO " $vsftpd_conf_file not found."
+  # 파일을 찾을 수 없음
+  INFO " $vsftpd_conf_file 파일을 찾을 수 없습니다."
 fi
 
-# Restore the original vsftpd.conf file from backup
+# 백업에서 원래 vsftpd.conf 파일 복원
 if [ -f $vsftpd_conf_file.bak ]; then
   mv $vsftpd_conf_file.bak $vsftpd_conf_file
 fi
 
-echo "Anonymous FTP has been restored to its original state."
-
-
-
-
+INFO "익명 FTP가 원래 상태로 복원되었습니다."
 
 cat $result
 
