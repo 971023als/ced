@@ -40,9 +40,6 @@ TMP1=`SCRIPTNAME`.log
 TMP3=$(mktemp)
 awk -F: '{print $1 ":" $3}' "/etc/passwd" > $TMP3
 
-# Run the previous script
-./U-52.sh
-
 # Check if the previous script has caused any problems
 if [ "$?" -ne 0 ]; then
   # Revert the changes made to the user accounts

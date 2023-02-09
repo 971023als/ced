@@ -26,6 +26,12 @@ backup_file="/var/log/patch.log.backup"
 # 백업 파일 경로 설정
 sudo cp $log_file $backup_file
 
+# 원래 상태로 복구
+sudo yum downgrade $(grep "Patches installed at" $backup_file | awk '{print $4, $5, $6}')
+
+# 백업 파일 제거
+sudo rm $backup_file
+
 cat $result
 
 echo ; echo 
