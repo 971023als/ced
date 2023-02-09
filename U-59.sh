@@ -1,10 +1,6 @@
 #!/bin/bash
 
- 
-
 . function.sh
-
- 
 
 BAR
 
@@ -20,12 +16,9 @@ EOF
 
 BAR
 
-
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
-
-
 
 # Define the location of backup files
 backup_files_dir="$HOME/hidden_files_backup"
@@ -33,7 +26,6 @@ backup_files_dir="$HOME/hidden_files_backup"
 # Check if the backup directory exists
 if [ ! -d "$backup_files_dir" ]; then
   echo "Backup directory does not exist, no files to restore"
-  exit 1
 fi
 
 # Restore hidden files and directories
@@ -42,11 +34,9 @@ for file in $(ls "$backup_files_dir"); do
 done
 
 # Remove the backup directory
-rm -rf "$backup_files_dir"
+sudo rm -rf "$backup_files_dir"
 
 echo "Original state has been restored successfully."
-
-
 
 
 cat $result
