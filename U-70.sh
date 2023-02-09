@@ -24,16 +24,11 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-
-# Restore sendmail init script
+# 송신 메일 초기화 스크립트 복원
 mv /etc/rc2.d/S88sendmail_bak /etc/rc2.d/S88sendmail
 
-# Start the sendmail service
-service sendmail start
-
-
-
-
+# 메일 보내기 서비스 시작
+service sendmail restart
     
 
 cat $result
