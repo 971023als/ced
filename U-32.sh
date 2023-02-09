@@ -18,20 +18,16 @@ EOF
 
 BAR
 
+# Sendmail 서비스 재시작
+sudo service sendmail restart
 
-
-# Start the Sendmail service
-sendmail &
-
-# Confirm Sendmail is running
+# Sendmail이 실행 중인지 확인
 PID=$(ps -ef | grep sendmail | awk '{print $2}')
 if [ -z "$PID" ]; then
-  echo "Sendmail service could not be started."
+  INFO "메일 보내기 서비스를 시작할 수 없습니다."
 else
-  echo "Sendmail service has been started with PID: $PID"
+  OK "Sendmail 서비스가 PID: $PID 로 시작되었습니다."
 fi
-
-
 
 cat $result
 
