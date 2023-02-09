@@ -16,6 +16,12 @@ EOF
 
 BAR
 
+
+# Backup files
+cp /etc/xinetd.d/rlogin /etc/xinetd.d/rlogin.bak
+cp /etc/xinetd.d/rsh /etc/xinetd.d/rsh.bak
+cp /etc/xinetd.d/rexec /etc/xinetd.d/rexec.bak
+
 # /etc/xinetd.d/rlogin 파일 복원
 if [ -f /etc/xinetd.d/rlogin.bak ]; then
   sudo mv /etc/xinetd.d/rlogin.bak /etc/xinetd.d/rlogin
@@ -38,8 +44,6 @@ else
 fi
 
 INFO "r 서비스가 원래 상태로 복구되었습니다."
-
-
 
 cat $result
 
