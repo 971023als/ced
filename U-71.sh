@@ -1,10 +1,8 @@
 #!/bin/bash
 
- 
 
 . function.sh
 
- 
 
 BAR
 
@@ -25,11 +23,10 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
-
-# Backup original httpd.conf
+# 원본 httpd.conf 백업
 cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bak
 
-# Restore original Server Tokens directive
+# 원래 서버 토큰 복원 지시문
 grep -q "^ServerTokens" /etc/httpd/conf/httpd.conf.bak
 if [ $? -eq 0 ]; then
   sed -i 's/^ServerTokens.*/ServerTokens /' /etc/httpd/conf/httpd.conf
@@ -37,15 +34,13 @@ else
   sed -i '/^ServerTokens.*/d' /etc/httpd/conf/httpd.conf
 fi
 
-# Restore original Server Signature directive
+# 원래 서버 서명 지시문 복원
 grep -q "^ServerSignature" /etc/httpd/conf/httpd.conf.bak
 if [ $? -eq 0 ]; then
   sed -i 's/^ServerSignature.*/ServerSignature /' /etc/httpd/conf/httpd.conf
 else
   sed -i '/^ServerSignature.*/d' /etc/httpd/conf/httpd.conf
 fi
-
-
 
 
 
