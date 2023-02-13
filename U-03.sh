@@ -20,11 +20,17 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Restore source files
-cp /etc/pam.d/system-auth.bak /etc/pam.d/system-auth
 
-# Remove backup file
-rm /etc/pam.d/system-auth.bak
+# Backup files
+cp /etc/pam.d/system-auth /etc/pam.d/system-auth.bak
+
+if grep -q "auth required pam_tally2.so deny=5 unlock_time=900" /etc/pam.d/common-auth; then
+  INFO "auth required pam_required pam_required2.so deny=5 unlock_time=900 존재."
+else
+  echo "auth required pam_tally2.so deny=5 unlock_time=900" >> /etc/pam.d/common-auth
+  INFO "auth required pam_required pam_required2.so deny=5 unlock_time=900 추가."
+fi
+
 
 
 cat $result

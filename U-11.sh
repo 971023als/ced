@@ -18,16 +18,14 @@ EOF
 
 BAR
 
+# Backup files
+cp /etc/rsyslog.conf /etc/rsyslog.conf.bak
 
-ORIG_OWNER=$(stat -c "%U:%G" /etc/rsyslog.conf)
-ORIG_PERMS=$(stat -c "%a" /etc/rsyslog.conf)
+# 파일 소유자를 "root" 사용자와 "root" 그룹으로 변경
+sudo chown root:root /etc/rsyslog.conf
 
-# Restore the original owner of the file
-sudo chown $ORIG_OWNER /etc/rsyslog.conf
-
-# Restore the original permissions of the file
-sudo chmod $ORIG_PERMS /etc/rsyslog.conf
-
+# 파일의 권한을 640으로 설정
+sudo chmod 640 /etc/rsyslog.conf
 
 cat $result
 

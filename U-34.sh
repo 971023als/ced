@@ -20,22 +20,15 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-
-
-
 # Start the named service
-named &
+/usr/sbin/named
 
-# Confirm the named service is running
-PID=$(ps -ef | grep named | awk '{print $2}')
-if [ -z "$PID" ]; then
-  echo "The named service could not be started."
+# Check if the named service is running
+if ps -ef | grep named &> /dev/null; then
+  OK "Named service has been successfully restored."
 else
-  echo "The named service has been started with PID: $PID"
+  WARN "Named service has not been restored."
 fi
-
-
-
 
 
 cat $result

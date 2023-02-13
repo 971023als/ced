@@ -21,15 +21,18 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
-# Check if TMP1 file exists
-if [ -f "$TMP1" ]; then
-  # Remove the line with 192.168.0.1 from /etc/hosts.allow
-  sudo sed -i '/192.168.0.1/d' /etc/hosts.allow
+# Remove the line allowing connections from 192.168.0.1 on port 22 (SSH)
+sudo sed -i '/sshd: 192.168.0.1/d' /etc/hosts.allow
 
-  # Remove the line with "ALL" from /etc/hosts.deny
-  sudo sed -i '/ALL/d' /etc/hosts.deny
+# Remove the line denying connections from all other IP addresses on port 22 (SSH)
+sudo sed -i '/sshd: ALL/d' /etc/hosts.deny
+
+# Check if the restore was successful
+if [ ! -f /etc/hosts.allow ] || [ ! -f /etc/hosts.deny ]; then
+  OK "Successfully restored the original state of /etc/hosts.allow and /etc/hosts.deny"
+else
+  WARN "Restore failed"
 fi
-
 
 
 

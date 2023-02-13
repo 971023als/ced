@@ -20,8 +20,6 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-
-
 # Defining Apache Configuration Files
 file="/etc/httpd/conf/httpd.conf"
 

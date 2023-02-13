@@ -24,17 +24,28 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
+# Backup files
+cp $HOME/.bashrc.bak $HOME/.bashrc
+cp $HOME/.bash_profile.bak $HOME/.bash_profile
 
-# Check if TMP1 file exists
-if [ -f "$TMP1" ]; then
-  # Restore the owner and permissions of /etc/hosts.equiv
-  sudo chown `stat -c %U /etc/hosts.equiv` /etc/hosts.equiv
-  sudo chmod `stat -c %a /etc/hosts.equiv` /etc/hosts.equiv
+# /etc/hosts.equiv의 소유자를 루트로 변경합니다
+sudo chown root /etc/hosts.equiv
 
-  # Restore the owner and permissions of $HOME/.rhosts
-  sudo chown `stat -c %U $HOME/.rhosts` $HOME/.rhosts
-  sudo chmod `stat -c %a $HOME/.rhosts` $HOME/.rhosts
-fi
+# /etc/hosts.equiv의 사용 권한을 600으로 변경합니다
+sudo chmod 600 /etc/hosts.equiv
+
+# $HOME/.r 호스트의 소유자를 루트로 변경
+sudo chown root $HOME/.rhosts
+
+# $HOME/.r 호스트의 사용 권한을 600으로 변경
+sudo chmod 600 $HOME/.rhosts
+
+# /etc/hosts.equiv에서 '+' 제거
+sudo sed -i '/^+/d' /etc/hosts.equiv
+
+# $HOME/.r 호스트에서 '+' 제거
+sed -i '/^+/d' $HOME/.rhosts
+
 
 
 

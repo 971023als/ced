@@ -37,6 +37,7 @@ restore_permissions .exrc
 restore_permissions .netrc
 
 
+
 cat $result
 
 echo ; echo

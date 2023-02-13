@@ -16,20 +16,39 @@ EOF
 
 BAR
 
-# Remove the echo file
-rm /etc/xinetd.d/echo
 
-# Remove the discard file
-rm /etc/xinetd.d/discard
 
-# Remove the daytime file
-rm /etc/xinetd.d/daytime
+# Check if echo service file exists and restore its original state
+if [ -f /etc/xinetd.d/echo ]; then
+    rm /etc/xinetd.d/echo
+    OK "echo service file has been restored."
+else
+    WARN "echo service file was not found."
+fi
 
-# Remove the chargen file
-rm /etc/xinetd.d/chargen
+# Check if discard service file exists and restore its original state
+if [ -f /etc/xinetd.d/discard ]; then
+    rm /etc/xinetd.d/discard
+    OK "discard service file has been restored."
+else
+    WARN "discard service file was not found."
+fi
 
-# Restart the xinetd service
-sudo service xinetd restart
+# Check if daytime service file exists and restore its original state
+if [ -f /etc/xinetd.d/daytime ]; then
+    rm /etc/xinetd.d/daytime
+    OK "daytime service file has been restored."
+else
+    WARN "daytime service file was not found."
+fi
+
+# Check if chargen service file exists and restore its original state
+if [ -f /etc/xinetd.d/chargen ]; then
+    rm /etc/xinetd.d/chargen
+    OK "chargen service file has been restored."
+else
+    WARN "chargen service file was not found."
+fi
 
 
 cat $result

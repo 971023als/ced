@@ -25,6 +25,7 @@ EOF
 
 BAR
 
+
 # Backup files
 cp /etc/passwd /etc/passwd.bak
 cp /etc/shadow /etc/shadow.bak
@@ -54,6 +55,7 @@ if [ -f $SHADOW_FILE ] ; then
 else
   WARN "섀도우 파일이 없습니다."
 fi
+ 
 
 cat $result
 

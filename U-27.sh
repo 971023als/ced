@@ -16,6 +16,7 @@ EOF
 
 BAR
 
+
 # Backup files
 cp /etc/xinetd.d/finger /etc/xinetd.d/finger.bak
 
@@ -46,6 +47,8 @@ if [ $? -ne 0 ]; then
 else
   OK "RPC 핑거 서비스가 성공적으로 원래 상태로 복원되었습니다."
 fi
+
+
 
 cat $result
 

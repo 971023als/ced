@@ -9,11 +9,8 @@ BAR
 CODE [U-71] Apache 웹서비스 정보 숨김
 
 cat << EOF >> $result
-
 [양호]: ServerTokens Prod, ServerSignature Off로 설정되어있는 경우
-
 [취약]: ServerTokens Prod, ServerSignature Off로 설정되어있지 않은 경우
-
 EOF
 
 BAR
@@ -23,27 +20,40 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
-# 원본 httpd.conf 백업
-cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bak
+TMP2=`SCRIPTNAME`_backup.log
 
-# 원래 서버 토큰 복원 지시문
-grep -q "^ServerTokens" /etc/httpd/conf/httpd.conf.bak
-if [ $? -eq 0 ]; then
-  sed -i 's/^ServerTokens.*/ServerTokens /' /etc/httpd/conf/httpd.conf
+cp "$filename" "$TMP2"
+
+if [ -e "$TMP2" ]; then
+  OK "Backup is successful: $TMP2"
 else
-  sed -i '/^ServerTokens.*/d' /etc/httpd/conf/httpd.conf
+  WARN "Backup failed."
 fi
 
-# 원래 서버 서명 지시문 복원
-grep -q "^ServerSignature" /etc/httpd/conf/httpd.conf.bak
-if [ $? -eq 0 ]; then
-  sed -i 's/^ServerSignature.*/ServerSignature /' /etc/httpd/conf/httpd.conf
+# Replace "ServerTokens Prod" with "ServerTokens Full" in apache2.conf file
+sed -i 's/ServerTokens Prod/ServerTokens Full/g' "$filename"
+
+# Replace "ServerSignatureOff" with "ServerSignatureOn" in the apache2.conf file
+sed -i 's/ServerSignature Off/ServerSignature On/g' "$filename"
+
+# Verify that Server Tokens is set to "Full"
+if ! grep -q "ServerTokens Full" "$filename"; then
+echo "ServerTokens Full" >> "$filename"
+fi
+
+# Verify that Server Signature is set to "On"
+if ! grep -q "ServerSignature On" "$filename"; then
+echo "ServerSignature On" >> "$filename"
+fi
+
+if cmp -s "$filename" "$TMP2"; then
+  OK "Recovery is successful."
 else
-  sed -i '/^ServerSignature.*/d' /etc/httpd/conf/httpd.conf
+  WARN "Recovery failed."
 fi
 
 
 
 cat $result
 
-echo ; echo 
+echo ; echo

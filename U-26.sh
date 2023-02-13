@@ -16,31 +16,20 @@ EOF
 
 BAR
 
-
-# Enable the Auto Mount service by changing the name of the startup script
+# Restore the Auto Mount service by renaming the startup script
 if [ -f "/etc/rc.d/rc2.d/_S28automountd" ]; then
-mv /etc/rc.d/rc2.d/_S28automountd /etc/rc.d/rc2.d/S28automountd
+sudo mv /etc/rc.d/rc2.d/_S28automountd /etc/rc.d/rc2.d/S28automountd
 fi
 
-# Check the status of the Auto Mount service
-status=$(ps -ef | grep automount | awk '{print $1}')
+# Start the Auto Mount service
+sudo service automount start
 
-# If the service is not running, start the service
-if [ "$status" != "online" ]; then
-/etc/rc.d/init.d/automount start
+# Check if the Auto Mount service is running
+if ps -ef | grep automount | awk '{print $1}' | grep -q "online"; then
+  OK "Automount service restored successfully."
+else
+  WARN "Automount service could not be restored."
 fi
-
-# Check the status of the Auto Mount service again
-status=$(ps -ef | grep automount | awk '{print $1}')
-
-# If the service is not running, print an error message and exit
-if [ "$status" != "online" ]; then
-  echo "Error: Auto Mount service could not be restored to its original state"
-fi
-
-echo "Auto Mount service has been successfully restored to its original state"
-
-
 cat $result
 
 echo ; echo

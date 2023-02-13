@@ -1,50 +1,42 @@
 #!/bin/bash
 
- 
-
 . function.sh
-
-
-TMP2=/tmp/tmp1
-
-> $TMP2
-
- 
 
 BAR
 
 CODE [U-53] 사용자 shell 점검
 
 cat << EOF >> $result
-
-[취약]: 로그인이 필요하지 않은 계정에 /bin/false(nologin) 쉘이 부여되어 있는 경우
-
-[양호]: 로그인이 필요하지 않은 계정에 /bin/false(nologin) 쉘이 부여되지 않은 경우
-
+[양호]: Session Timeout이 600초(10분) 이하로 설정되어 있는 경우
+[취약]: Session Timeout이 600초(10분) 이하로 설정되지 않은 경우
 EOF
 
-BAR
+TMP2=/tmp/tmp1
 
+> $TMP2
+
+BAR
 
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
+# Backup the original /etc/passwd file
+cp /etc/passwd $TMP2
 
-# Read the original shells of the users from the log file
-while read -r line; do
-  user=$(echo "$line" | awk '{print $1}')
-  original_shell=$(echo "$line" | awk '{print $3}')
+if [ -f $TMP1 ]; then
+  # If a problem occurs, restore the original /etc/passwd file
+  cp $TMP2 /etc/passwd
 
-  # Restore the original shell of the user
-  sudo usermod -s "$original_shell" "$user"
-  INFO "Restored user $user shell to $original_shell"
-done < "$TMP1"
+  if [ $? -eq 0 ]; then
+    OK "Recovered"
+  else
+    WARN "Not recovered"
+  fi
+else
+  INFO "No problem detected"
+fi
 
-
-
-
- 
 
 cat $result
 

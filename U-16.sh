@@ -1,6 +1,10 @@
 #!/bin/bash
 
+ 
+
 . function.sh
+
+ 
 
 BAR
 
@@ -20,28 +24,27 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# 백업 디렉터리 정의
-backup_dir="/dev_backup"
 
-# 현재 /dev 디렉토리 제거
-rm -rf /dev
 
-# 제거가 성공적이었는지 확인하십시오
-if [ $? -eq 0 ]; then
-  OK "/dev 디렉토리가 제거되었습니다."
-else
-  INFO "/dev 디렉토리 제거 실패"
-fi
+# Function to restore the device files
+function restore_device_files() {
+  # Check if the device files still do not exist
+  if [ -f "/dev/file1" ] || [ -f "/dev/file2" ] || [ -f "/dev/file3" ]; then
+    # Restore the original device files
+    sudo cp -R /path/to/backup/device/files/. /dev/
+    # Check if the device files were restored
+    if [ -f "/dev/file1" ] && [ -f "/dev/file2" ] && [ -f "/dev/file3" ]; then
+      OK "The device files have been restored."
+    else
+      WARN "The device files could not be restored."
+    fi
+  else
+    INFO "The device files do not exist."
+  fi
+}
 
-# 백업 디렉토리를 /dev에 복사합니다
-sudo cp -R $backup_dir /dev
-
-# 복사가 성공했는지 확인합니다
-if [ $? -eq 0 ]; then
-  OK "$backup_dir 디렉토리가 /dev에 복사되었습니다."
-else
-  WARN "$backup_dir 디렉토리 복사 실패"
-fi
+# Call the function to restore the device files
+restore_device_files
  
 cat $result
 

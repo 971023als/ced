@@ -20,9 +20,6 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-
-#!/bin/bash
-
 sudo chown root:root /etc/crontab
 sudo chmod 644 /etc/crontab
 
@@ -44,12 +41,26 @@ sudo chmod 644 /etc/cron.allow
 sudo chown root:root /etc/cron.deny
 sudo chmod 644 /etc/cron.deny
 
-sudo chown root:root /var/spool/cron*
-sudo chmod 755 /var/spool/cron*
+sudo chown root:crontab /var/spool/cron*
+sudo chmod 770 /var/spool/cron*
 
-sudo chown root:root /var/spool/cron/crontabs/
-sudo chmod 755 /var/spool/cron/crontabs/
+sudo chown root:crontab /var/spool/cron/crontabs/
+sudo chmod 700 /var/spool/cron/crontabs/
 
+# Check if the original state has been restored
+if [ $(stat -c "%a" /etc/crontab) -eq 644 ] &&
+   [ $(stat -c "%a" /etc/cron.hourly) -eq 755 ] &&
+   [ $(stat -c "%a" /etc/cron.daily) -eq 755 ] &&
+   [ $(stat -c "%a" /etc/cron.weekly) -eq 755 ] &&
+   [ $(stat -c "%a" /etc/cron.monthly) -eq 755 ] &&
+   [ $(stat -c "%a" /etc/cron.allow) -eq 644 ] &&
+   [ $(stat -c "%a" /etc/cron.deny) -eq 644 ] &&
+   [ $(stat -c "%a" /var/spool/cron*) -eq 770 ] &&
+   [ $(stat -c "%a" /var/spool/cron/crontabs/) -eq 700 ]; then
+   OK "Original state has been restored"
+else
+   WARN "Original state has not been restored"
+fi
 
 cat $result
 

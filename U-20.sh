@@ -16,6 +16,10 @@ EOF
 
 BAR
 
+TMP1=`SCRIPTNAME`.log
+
+>$TMP1  
+
 # vsftpd 구성 파일 백업
 cp /etc/vsftpd.conf /etc/vsftpd.conf.bak
 
@@ -40,6 +44,9 @@ if [ -f $vsftpd_conf_file.bak ]; then
 fi
 
 INFO "익명 FTP가 원래 상태로 복원되었습니다."
+
+
+
 
 cat $result
 

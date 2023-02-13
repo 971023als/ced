@@ -20,18 +20,15 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-ORIG_OWNER=$(stat -c "%U:%G" /etc/hosts)
-ORIG_PERMS=$(stat -c "%a" /etc/hosts)
+# Backup files
+cp /etc/hosts /etc/hosts.bak
 
-# Restore the original owner of the file
-sudo chown $ORIG_OWNER /etc/hosts
+# 파일 소유자를 "root" 사용자와 "root" 그룹으로 변경
+sudo chown root:root /etc/hosts
 
-# Restore the original permissions of the file
-sudo chmod $ORIG_PERMS /etc/hosts
+# 파일의 권한을 600으로 설정
+sudo chmod 600 /etc/hosts
 
-
-
-# 하위 파일...
 
 cat $result
 

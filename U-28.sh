@@ -16,41 +16,43 @@ EOF
 
 BAR
 
-# ypserv 서비스 시작
+# Start ypserv service
 sudo service ypserv start
 
-# 부팅 시 ypserv 서비스가 시작되도록 설정
+# Enable ypserv service to start at boot time
 sudo update-rc.d ypserv enable
 
-# 바인딩 서비스 시작
+# Start ypbind service
 sudo service ypbind start
 
-# 부팅 시 시작하도록 유형 바인딩 서비스 설정
+# Enable ypbind service to start at boot time
 sudo update-rc.d ypbind enable
 
-#  ypxfrd 서비스 시작
+# Start ypxfrd service
 sudo service ypxfrd start
 
-# 부팅 시 ypxfrd 서비스가 시작되도록 설정
+# Enable ypxfrd service to start at boot time
 sudo update-rc.d ypxfrd enable
 
-# rpc.yppasswdd 서비스를 시작합니다
+# Start the rpc.yppasswdd service
 sudo service rpc.yppasswdd start
 
-# 부팅 시 rpc.yppasswdd 서비스 사용
+# Enable the rpc.yppasswdd service at bootup
 sudo update-rc.d rpc.yppasswdd enable
 
-# rpc.yupdate 서비스 시작
+# Start the rpc.yupdated service
 sudo service rpc.ypupdated start
 
-# 부팅 시 rpc.ypupdate 서비스 사용
+# Enable the rpc.ypupdate service at bootup
 sudo update-rc.d rpc.ypupdated enable
 
-#  ypserv 서비스 시작
-sudo service ypserv start
-
-# 부팅 시 ypserv 서비스가 시작되도록 설정
-sudo update-rc.d ypserv enable
+# Check if the NIS and NIS+ services are running
+status=$(service ypserv status | grep running)
+if [ "$status" == "running" ]; then
+  OK "NIS and NIS+ services are recovered and running."
+else
+  WARN "NIS and NIS+ services are not recovered."
+fi
 
 cat $result
 

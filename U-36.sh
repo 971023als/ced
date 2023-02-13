@@ -21,12 +21,15 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
-# Replace [Apache_home], [username], and [groupname] with appropriate original values
-APACHE_CONF_FILE=/etc/httpd/conf/httpd.conf
-USERNAME=root
-GROUPNAME=root
+# Backup files
+cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak
 
-# Replace user and group rows with original values
+# [Apache_home], [username] 및 [groupname]을(를) 적절한 값으로 바꿈
+APACHE_CONF_FILE=/etc/apache2/apache2.conf
+USERNAME=user
+GROUPNAME=user
+
+# 사용자 및 그룹 행을 새 값으로 바꿈
 sed -i "s/User.*/User $USERNAME/g" $APACHE_CONF_FILE
 sed -i "s/Group.*/Group $GROUPNAME/g" $APACHE_CONF_FILE
 

@@ -18,20 +18,15 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
+# Start the DNS service
+/usr/sbin/named
 
-# Start the named service
-named &
-
-# Confirm the named service is running
-PID=$(ps -ef | grep named | awk '{print $2}')
-if [ -z "$PID" ]; then
-  echo "The named service could not be started."
+# Check if the DNS service is running
+if ps -ef | grep named &> /dev/null; then
+  OK "DNS service has been successfully restored."
 else
-  echo "The named service has been started with PID: $PID"
+  WARN "DNS service has not been restored."
 fi
-
- 
-
 
 
 cat $result

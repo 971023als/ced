@@ -19,15 +19,14 @@ EOF
 BAR
 
 
-ORIG_OWNER=$(stat -c "%U:%G" /etc/services)
-ORIG_PERMS=$(stat -c "%a" /etc/services)
+# Backup files
+cp /etc/services /etc/services.bak
 
-# Restore the original owner of the file
-sudo chown $ORIG_OWNER /etc/services
+# 파일 소유자를 "root" 사용자와 "root" 그룹으로 변경
+sudo chown root:root /etc/services
 
-# Restore the original permissions of the file
-sudo chmod $ORIG_PERMS /etc/services
-
+# 파일의 권한을 644로 설정
+sudo chmod 644 /etc/services
 
 
 cat $result

@@ -21,7 +21,6 @@ EOF
 BAR
 
 
-
 # Backup files
 cp $HOME/.bashrc $HOME/.bashrc.bak
 cp $HOME/.bash_profile $HOME/.bash_profile.bak

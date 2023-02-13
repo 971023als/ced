@@ -20,6 +20,10 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
+# Backup files
+cp /etc/profile /etc/profile.bak
+cp ~/.profile ~/.profile.bak
+
 # PATH의 현재 값을 가져옴
 path=$(echo $PATH)
 
@@ -48,6 +52,13 @@ path_array+=(".")
 # 배열을 ":" 구분 기호를 사용하여 문자열로 다시 조인
 new_path=$(IFS=:; echo "${path_array[*]}")
 
+# PATH 환경 변수 업데이트
+echo "PATH=$new_path" >> ~/.profile
+echo "PATH=$new_path" >> /etc/profile
+
+# 환경 변수 다시 로드
+source ~/.profile
+source /etc/profile
 
 
 cat $result
