@@ -7,14 +7,15 @@ BAR
 CODE [U-28] NIS , NIS+ 점검		
 
 cat << EOF >> $result
-
 [양호]: NIS 서비스가 비활성화 되어 있거나, 필요 시 NIS+를 사용하는 경우
-
 [취약]: NIS 서비스가 활성화 되어 있는 경우
-
 EOF
 
 BAR
+
+TMP1=`SCRIPTNAME`.log
+
+>$TMP1 
 
 # Start ypserv service
 sudo service ypserv start
@@ -53,6 +54,7 @@ if [ "$status" == "running" ]; then
 else
   WARN "NIS and NIS+ services are not recovered."
 fi
+
 
 cat $result
 

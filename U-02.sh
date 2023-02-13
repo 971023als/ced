@@ -1,54 +1,44 @@
-#!/bin/bash 
-
- 
+#!/bin/bash
 
 . function.sh
 
- 
-
-TMP1=$(SCRIPTNAME).log
-
-> $TMP1
-
- 
 BAR
 
 CODE [U-02] 패스워드 복잡성 설정
 
 cat << EOF >> $result
 
-[양호]: 영문 숫자 특수문자가 혼합된 8 글자 이상의 패스워드가 설정된 경우.
+[양호]: 패스워드 최소길이 8자리 이상, 영문·숫자·특수문자 최소 입력 기능이 설정된 경우
 
-[취약]: 영문 숫자 특수문자 혼합되지 않은 8 글자 미만의 패스워드가 설정된 경우.
+[취약]: 패스워드 최소길이 8자리 이상, 영문·숫자·특수문자 최소 입력 기능이 설정된 경우
 
 EOF
 
 BAR
 
+TMP1=`SCRIPTNAME`.log
 
-# Backup files
-cp /etc/login.defs /etc/login.defs.bak
-cp /etc/pam.d/system-auth /etc/pam.d/system-auth.bak
+>$TMP1  
 
+DEF_FILE="/etc/login.defs"
+AUTH_FILE="/etc/pam.d/system-auth"
 
-# /etc/login.defs에서 최소 암호 길이 확인
-min_len_defs=$(grep "^PASS_MIN_LEN" /etc/login.defs | awk '{print $2}')
-if [ "$min_len_defs" -ge 8 ]; then
-  OK "/etc/login.defs의 최소 암호 길이가 $min_len_defs 로 설정됨"
+# Restore /etc/login.defs to its original state
+if [ -f "$DEF_FILE.bak" ]; then
+  sudo cp "$DEF_FILE.bak" "$DEF_FILE"
+  OK "The original state of $DEF_FILE has been restored."
 else
-  WARN "/etc/login.defs의 최소 암호 길이가 8보다 작음"
+  WARN "$DEF_FILE.bak not found. $DEF_FILE has not been restored."
 fi
 
-# /etc/pam.d/system-auth에서 영어, 숫자 및 특수 문자 설정 확인
-min_len_pam=$(grep "pam_cracklib.so" /etc/pam.d/system-auth | grep "minlen" | awk -F"=" '{print $2}')
-if [ "$min_len_pam" -ge 8 ]; then
-  OK "/etc/pam.d/system-auth의 최소 암호 길이가 $min_len_pam으로 설정됨"
+# Restore /etc/pam.d/system-auth to its original state
+if [ -f "$AUTH_FILE.bak" ]; then
+  sudo cp "$AUTH_FILE.bak" "$AUTH_FILE"
+  OK "The original state of $AUTH_FILE has been restored."
 else
-  WARN "/etc/pam.d/system-auth의 최소 암호 길이가 8보다 작습니다."
+  WARN "$AUTH_FILE.bak not found. $AUTH_FILE has not been restored."
 fi
 
-
- 
 
 cat $result
 

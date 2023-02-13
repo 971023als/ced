@@ -7,14 +7,15 @@ BAR
 CODE [U-26] automountd 제거		
 
 cat << EOF >> $result
-
 [양호]: automountd 서비스가 비활성화 되어 있는 경우
-
 [취약]: automountd 서비스가 활성화 되어 있는 경우
-
 EOF
 
 BAR
+
+TMP1=`SCRIPTNAME`.log
+
+>$TMP1 
 
 # Restore the Auto Mount service by renaming the startup script
 if [ -f "/etc/rc.d/rc2.d/_S28automountd" ]; then
@@ -30,6 +31,9 @@ if ps -ef | grep automount | awk '{print $1}' | grep -q "online"; then
 else
   WARN "Automount service could not be restored."
 fi
+
+
+
 cat $result
 
 echo ; echo

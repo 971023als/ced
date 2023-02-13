@@ -7,18 +7,15 @@ BAR
 CODE [U-20] Anonymous FTP 비활성화
 
 cat << EOF >> $result
-
 [양호]: Anonymous FTP (익명 ftp) 접속을 차단한 경우
-
 [취약]: Anonymous FTP (익명 ftp) 접속을 차단하지 않은 경우
-
 EOF
 
 BAR
 
 TMP1=`SCRIPTNAME`.log
 
->$TMP1  
+>$TMP1 
 
 # vsftpd 구성 파일 백업
 cp /etc/vsftpd.conf /etc/vsftpd.conf.bak
@@ -44,9 +41,6 @@ if [ -f $vsftpd_conf_file.bak ]; then
 fi
 
 INFO "익명 FTP가 원래 상태로 복원되었습니다."
-
-
-
 
 cat $result
 

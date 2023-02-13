@@ -7,11 +7,8 @@ BAR
 CODE [U-22] crond 파일 소유자 및 권한 설정
 
 cat << EOF >> $result
-
 [양호]: crontab 명령어 일반사용자 금지 및 cron 관련 파일 640 이하인 경우
-
 [취약]: crontab 명령어 일반사용자 사용가능하거나, crond 관련 파일 640 이상인 경우
-
 EOF
 
 BAR
@@ -61,6 +58,7 @@ if [ $(stat -c "%a" /etc/crontab) -eq 644 ] &&
 else
    WARN "Original state has not been restored"
 fi
+
 
 cat $result
 

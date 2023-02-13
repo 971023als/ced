@@ -17,49 +17,37 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-# Files containing user accounts
-PASSWD="/etc/passwd"
-
-# Temporary file to store the original UIDs of users
-TMP_ORIGINAL=$(mktemp)
-
-# Save the original UIDs of users to a temporary file
-awk -F: '{print $1 ":" $3}' "$PASSWD" > $TMP_ORIGINAL
-
-# Check if the previous script has been executed
+# Check if the log file exists
 if [ -f $TMP1 ]; then
-# Temporary file to store the changed UIDs of users
-TMP_CHANGED=$(mktemp)
 
-# Save the changed UIDs of users to a temporary file
-awk -F: '{print $1 ":" $3}' "$PASSWD" > $TMP_CHANGED
+# Read the log file and store the data in an array
+LOG_DATA=($(cat $TMP1))
 
-# Store the changed UIDs of users in an array
-CHANGED_UIDS=($(cut -d: -f2 $TMP_CHANGED))
+# Loop through the log data and restore the original state
+for data in "${LOG_DATA[@]}"; do
 
-# Loop through the changed UIDs of users
-for uid in "${CHANGED_UID[@]}"; do
-# Get the user with the changed UID
-CHANGED_USER=$(grep ":$uid" $TMP_CHANGED | cut -d: -f1)
+# Split the log data into user and UID
+USER=$(echo $data | awk -F: '{print $1}')
+ORIG_UID=$(echo $data | awk -F: '{print $2}')
 
-# Get the original UID of the user
-ORIGINAL_UID=$(grep "^$CHANGED_USER:" $TMP_ORIGINAL | awk -F: '{print $2}')
+# Check if the user exists in the system
+if id $USER >/dev/null 2>&1; then
 
-# Check if the UID of the user has been changed
-if [ $uid -ne $ORIGINAL_UID ]; then
-# Change the UID of the user back to its original value
-usermod -u $ORIGINAL_UID $CHANGED_USER
+# Change the user's UID to the original UID
+usermod -u $ORIG_UID $USER
 
-# Print Results
-INFO "$CHANGED_USER's UID restored to $ORIGINAL_UID"
+# Print the results
+INFO "UID of $USER changed back to $ORIG_UID"
 fi
 done
 
-# Remove temporary files
-rm $TMP_ORIGINAL $TMP_CHANGED
+# Remove the log file
+rm $TMP1
 
+# Print the result
+OK "Original state has been successfully restored."
 else
-INFO "Previous script has not been executed."
+WARN "Log file does not exist, no changes were made to the system."
 fi
 
 

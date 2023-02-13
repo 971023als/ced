@@ -18,30 +18,26 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
-# Function to restore the original state
-restore_original_state() {
-  # Backup the current rsyslog.conf file
-  cp /etc/rsyslog.conf /etc/rsyslog.conf.bak
+filename="/etc/rsyslog.conf"
 
-  # Replace the current rsyslog.conf file with the backup
-  mv /etc/rsyslog.conf.bak /etc/rsyslog.conf
-}
-
-# Check if the script was executed with root privileges
-if [ "$EUID" -ne 0 ]; then
-  echo "Please run the script as root or with sudo."
+if [ ! -e "$filename" ]; then
+INFO "$filename does not exist"
 fi
 
-# Try to restore the original state
-restore_original_state
+# Create a backup of the original file
+if [ ! -e "$filename.bak" ]; then
+cp "$filename" "$filename.bak"
+fi
 
-# Check if the restoration was successful
-diff=$(diff /etc/rsyslog.conf /etc/rsyslog.conf.bak)
+# Restore the original file from the backup
+cp "$filename.bak" "$filename"
 
-if [ -n "$diff" ]; then
-  echo "Recovery failed."
+# Check if the original file was restored successfully
+difference=$(diff "$filename" "$filename.bak")
+if [ -z "$difference" ]; then
+    OK "Recovered: $filename"
 else
-  echo "Recovery successful."
+    WARN "Not recovered: $filename"
 fi
 
 
