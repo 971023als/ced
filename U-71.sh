@@ -25,9 +25,9 @@ TMP2=`SCRIPTNAME`_backup.log
 cp "$filename" "$TMP2"
 
 if [ -e "$TMP2" ]; then
-  OK "Backup is successful: $TMP2"
+  OK "복원 성공: $TMP2"
 else
-  WARN "Backup failed."
+  WARN "복원 불가."
 fi
 
 # Replace "ServerTokens Prod" with "ServerTokens Full" in apache2.conf file
