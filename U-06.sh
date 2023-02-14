@@ -26,7 +26,7 @@ BACKUP_DIR="/backup_invalid_owners"
 
 # 잘못된 소유자가 있는 파일 또는 디렉터리 백업
 mkdir -p "$BACKUP_DIR"
-if find /root/ -nouser -print0 2>/dev/null | xargs -0 tar -czf "$BACKUP_DIR/invalid_owners_backup.tar.gz"; then
+if find /root/ -nouser -print 2>/dev/null | xargs -0 tar -czf "$BACKUP_DIR/invalid_owners_backup.tar.gz"; then
  OK "잘못된 소유자가 있는 파일,디렉터리 백업 성공"
 else
   INFO "잘못된 소유자가 있는 파일, 디렉터리가 없어서 백업하지 않았음"
