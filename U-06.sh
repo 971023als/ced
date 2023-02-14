@@ -21,22 +21,23 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
-backup_dir="./backup_nouser_nogroup"
+# 백업 스크립트
+backup_file="/tmp/invalid_owner_files_$(date +%Y-%m-%d_%H-%M-%S).tar.gz"
+tar -czvf $backup_file /root/ --owner=root --group=root --mtime='UTC' --atime-preserve=system --selinux --acls --xattrs
 
-# 백업 디렉터리가 있는지 확인
-if [ -d "$backup_dir" ]; then
-  # 백업된 파일을 original location로 복사
-  for file in $(find "$backup_dir" -type f); do
-    original_file="$(echo "$file" | sed "s|$backup_dir||")"
-    cp -R "$file" "$original_file"
-  done
+# -----------------------------------------------------------------------------------------
 
-  # 백업 디렉터리 제거
-  rm -rf "$backup_dir"
-
-  echo "Files have been recovered and backup directory has been deleted."
+# 스크립트 복원
+restore_file=$(ls -1t /tmp/invalid_owner_files*.tar.gz 2>/dev/null | head -n1)
+if [ -f "$backup_file" ]; then
+  if [ -z "$restore_file" ]; then
+      WARN "백업 파일을 찾을 수 없습니다."
+  else
+    OK "$restore_file에서 복원 중"
+    tar -xzvf $restore_file -C /
+  fi
 else
-  echo "Backup directory not found. No recovery possible."
+  INFO "$file 을 찾을 수 없습니다"
 fi
 
 cat $result

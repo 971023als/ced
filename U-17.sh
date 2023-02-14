@@ -76,9 +76,9 @@ for file in "${files[@]}"; do
       # 가장 오래된 백업 파일이 없음을 나타내는 메시지를 표시
       WARN "백업 파일을 찾을 수 없습니다. 시스템을 복원할 수 없습니다.: $oldest_backup"
     fi
-    else
-      INFO "$file 을 찾을 수 없습니다"
-    fi
+  else
+    INFO "$file 을 찾을 수 없습니다"
+  fi
 done
 
 
