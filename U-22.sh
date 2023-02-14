@@ -7,11 +7,8 @@ BAR
 CODE [U-22] crond 파일 소유자 및 권한 설정
 
 cat << EOF >> $result
-
 [양호]: crontab 명령어 일반사용자 금지 및 cron 관련 파일 640 이하인 경우
-
 [취약]: crontab 명령어 일반사용자 사용가능하거나, crond 관련 파일 640 이상인 경우
-
 EOF
 
 BAR
@@ -20,73 +17,47 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Restore backup files
-cp /etc/crontab.bak /etc/crontab
-cp /etc/cron.hourly.bak /etc/cron.hourly
-cp /etc/cron.daily.bak /etc/cron.daily
-cp /etc/cron.weekly.bak /etc/cron.weekly
-cp /etc/cron.monthly.bak /etc/cron.monthly
-cp /etc/cron.allow.bak /etc/cron.allow
-cp /etc/cron.deny.bak /etc/cron.deny
-cp /var/spool/cron/*.bak /var/spool/cron/*
-#cp /var/spool/cron/crontabs/*.bak /var/spool/cron/crontabs/*
+sudo chown root:root /etc/crontab
+sudo chmod 644 /etc/crontab
 
+sudo chown root:root /etc/cron.hourly
+sudo chmod 755 /etc/cron.hourly
 
+sudo chown root:root /etc/cron.daily
+sudo chmod 755 /etc/cron.daily
 
+sudo chown root:root /etc/cron.weekly
+sudo chmod 755 /etc/cron.weekly
 
-# 백업할 원본 파일 배열 설정
-files=("/etc/crontab" "/etc/cron.hourly" "/etc/cron.daily" "/etc/cron.weekly" "/etc/cron.monthly" "/etc/cron.allow" "/etc/cron.deny" "/var/spool/cron/*") #/var/spool/cron/crontabs/*
+sudo chown root:root /etc/cron.monthly
+sudo chmod 755 /etc/cron.monthly
 
-# 백업 디렉터리 설정
-# backup_dir="/backup"
+sudo chown root:root /etc/cron.allow
+sudo chmod 644 /etc/cron.allow
 
-# 백업 파일의 접두사 설정
-prefix="_backup_"
+sudo chown root:root /etc/cron.deny
+sudo chmod 644 /etc/cron.deny
 
-# 현재 날짜와 시간을 알다
-current_time=$(date +%Y%m%d_%H%M%S)
+sudo chown root:crontab /var/spool/cron*
+sudo chmod 770 /var/spool/cron*
 
-# 각 원본 파일을 반복합니다
-for file in "${files[@]}"; do
-  # create a new backup file using the current time in the file name
-  cp -rp "$file" "$file$prefix$current_time"
-  # 백업이 성공적으로 생성되었음을 나타내는 메시지 표시
-  echo "Successfully created backup file: $file$prefix$current_time"
-  OK "시스템이 성공적으로 백업되었습니다.: $file$prefix$current_time"
+sudo chown root:crontab /var/spool/cron/crontabs/
+sudo chmod 700 /var/spool/cron/crontabs/
 
-done
-
-
-# --------------------------------------------------------------------------------------
-
-
-# 원본 파일 배열 설정
-files=("/etc/crontab" "/etc/cron.hourly" "/etc/cron.daily" "/etc/cron.weekly" "/etc/cron.monthly" "/etc/cron.allow" "/etc/cron.deny" "/var/spool/cron/*") #/var/spool/cron/crontabs/*
-
-# 백업 디렉터리 설정
-# backup_dir="/backup"
-
-# 백업 파일에 대한 접두사 설정
-prefix="_backup_"
-
-# 각 원본 파일을 반복합니다
-for file in "${files[@]}"; do
-  # 각 원본 파일에 대해 가장 오래된 백업 파일 찾기
-  oldest_backup=$(ls -t "$file$prefix"* | tail -1)
-
-  #각 원본 파일에 대해 가장 오래된 백업 파일이 있는지 확인
-  if [ -f "$oldest_backup" ]; then
-    # 가장 오래된 백업 파일을 원래 파일로 복원
-    cp -rp "$oldest_backup" "$file"
-    # 복원이 성공했음을 나타내는 메시지를 표시
-    echo "Successfully restored the oldest backup file: $oldest_backup to $file"
-    OK "시스템이 성공적으로 원래 상태로 복원되었습니다.: $oldest_backup to $file"
-  else
-    # 가장 오래된 백업 파일이 없음을 나타내는 메시지를 표시
-    echo "The oldest backup file does not exist: $oldest_backup"
-    WARN "백업 파일을 찾을 수 없습니다. 시스템을 복원할 수 없습니다.: $oldest_backup"
-  fi
-done
+# Check if the original state has been restored
+if [ $(stat -c "%a" /etc/crontab) -eq 644 ] &&
+   [ $(stat -c "%a" /etc/cron.hourly) -eq 755 ] &&
+   [ $(stat -c "%a" /etc/cron.daily) -eq 755 ] &&
+   [ $(stat -c "%a" /etc/cron.weekly) -eq 755 ] &&
+   [ $(stat -c "%a" /etc/cron.monthly) -eq 755 ] &&
+   [ $(stat -c "%a" /etc/cron.allow) -eq 644 ] &&
+   [ $(stat -c "%a" /etc/cron.deny) -eq 644 ] &&
+   [ $(stat -c "%a" /var/spool/cron*) -eq 770 ] &&
+   [ $(stat -c "%a" /var/spool/cron/crontabs/) -eq 700 ]; then
+   OK "Original state has been restored"
+else
+   WARN "Original state has not been restored"
+fi
 
 
 cat $result

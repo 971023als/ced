@@ -26,7 +26,7 @@ BAR
 
 
 # 백업할 원본 파일 배열 설정
-files=("/etc/apache2/sites-available/000-default.conf")
+files=("/etc/httpd/conf/httpd.conf")
 
 # 백업 디렉터리 설정
 # backup_dir="/backup"
