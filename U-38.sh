@@ -20,7 +20,7 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-HTTPD_ROOT="/etc/apache2/apache2.conf"
+HTTPD_ROOT="/etc/httpd/conf/httpd.conf"
 UNWANTED_ITEMS="manual samples docs"
 BACKUP_DIR="/root/httpd_backup"
 
@@ -36,7 +36,7 @@ done
 
 #------------------------------------------------------------------
 
-HTTPD_ROOT="/etc/apache2/apache2.conf"
+HTTPD_ROOT="/etc/httpd/conf/httpd.conf"
 UNWANTED_ITEMS="manual samples docs"
 BACKUP_DIR="/root/httpd_backup"
 
