@@ -23,7 +23,7 @@ EOF
 BAR
 
 # 변수 설정
-backup_dir="/path/to/backup/dir"
+backup_dir="/path/backup"
 source_dir="/home/adiosl/"
 
 # 백업 디렉토리(존재하지 않는 경우) 생성
@@ -40,8 +40,8 @@ find / -type d -name ".*" ! -path "/run/user/1000/gvfs/*" -exec cp -r --parents 
 #--------------------------------------------------------------------------------------------------
 
 # 변수 설정
-backup_dir="/path/to/backup/dir"
-source_dir="/"
+backup_dir="/path/backup"
+source_dir="/home/user/"
 
 # 숨겨진 파일 및 디렉터리 복구
 rsync -a --delete "$backup_dir" "$source_dir"
