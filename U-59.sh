@@ -24,7 +24,7 @@ BAR
 
 # 변수 설정
 backup_dir="/path/to/backup/dir"
-source_dir="/"
+source_dir="/home/adiosl/"
 
 # 백업 디렉토리(존재하지 않는 경우) 생성
 if [ ! -d "$backup_dir" ]; then
