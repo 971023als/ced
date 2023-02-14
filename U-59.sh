@@ -47,7 +47,7 @@ source_dir="/home/user/"
 # 숨겨진 파일 및 디렉터리 복구
 rsync -a --delete "$backup_dir" "$source_dir"
 
-
+INFO "숨겨진 디렉토리 및 파일을 복구 완료"
 
 cat $result
 
