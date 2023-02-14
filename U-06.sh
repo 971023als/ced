@@ -21,35 +21,32 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
-# 백업 디렉토리(존재하지 않는 경우) 생성
-if [ ! -d "$backup_dir" ]; then
-    mkdir -p $backup_dir
+# 백업 디렉터리 경로 정의
+BACKUP_DIR="/backup_invalid_owners"
+
+# 잘못된 소유자가 있는 파일 또는 디렉터리 백업
+mkdir -p "$BACKUP_DIR"
+if find /root/ -nouser -print0 2>/dev/null | xargs -0 tar -czf "$BACKUP_DIR/invalid_owners_backup.tar.gz"; then
+ OK "잘못된 소유자가 있는 파일 또는 디렉터리 백업 성공"
+else
+  INFO "잘못된 소유자가 있는 파일 또는 디렉터리를 백업하지 못했습니다."
+fi
+#--------------------------------------------------------------
+
+BACKUP_DIR="/backup_invalid_owners"
+
+# 잘못된 소유자가 있는 파일 또는 디렉터리 복원
+if tar -xzf "$BACKUP_DIR/invalid_owners_backup.tar.gz" -C /; then
+  OK "잘못된 소유자가 있는 파일 또는 디렉터리를 성공적으로 복원했습니다."
+else
+  INFO "잘못된 소유자가 있는 파일 또는 디렉터리를 복원하지 못함"
 fi
 
-# 잘못된 소유자가 있는 파일 찾기
-invalid_owner_files=$(find /root/ -nouser -print 2>/dev/null)
-if [ -f "$invalid_owner_files" ]; then
-  if [ -z "$invalid_owner_files" ]; then
-      WARN "백업할 파일이 없습니다."
-  else
-    cp -R $invalid_owner_files $backup_dir
-    OK "백업이 완료되었습니다."
-  fi
+# 백업 디렉터리 정리
+if rm -rf "$BACKUP_DIR"; then
+  INFO "백업 디렉터리를 성공적으로 정리했습니다"
 else
-  INFO "$invalid_owner_files 을 찾을 수 없습니다"
-fi
-
-# 잘못된 소유자가 있는 백업 파일 찾기
-backup_files=$(find $backup_dir -type f -o -type d)
-if [ -f "$backup_files" ]; then
-  if [ -z "$backup_files" ]; then
-    INFO "백업된 파일을 찾을 수 없습니다."
-  else
-    cp -R $backup_files /root/
-    OK "복원이 완료되었습니다."
-  fi
-else
-  INFO "$backup_files 을 찾을 수 없습니다"
+  INFO "백업 디렉터리를 정리하지 못했습니다"
 fi
 
 cat $result
