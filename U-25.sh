@@ -28,20 +28,19 @@ INFO "이 부분은 백업 파일 관련한 항목이 아닙니다"
 sudo service nfs start
 
 # NFS 서비스의 상태를 확인합니다
-sudo service nfs status
+# sudo service nfs status
 
-sudo mount 192.168.0.100:/nfs_share /mnt/nfs
+# sudo mount 192.168.0.100:/nfs_share /mnt/nfs
 
 # NFS 공유에 액세스하여 NFS 공유가 올바르게 마운트되었는지 확인
-ls /mnt/nfs
+# ls /mnt/nfs
 
-# 문제가 있는 경우 오류 메시지를 인쇄하고 종료
-if [ $? -ne 0 ]; then
-  echo "오류: NFS 서비스를 원래 상태로 복원할 수 없습니다."
+# Check if the NFS service is running
+if sudo service nfs status | grep -q "is running"; then
+  OK "NFS 서비스가 성공적으로 복원되었음."
+else
+  WARN "NFS 서비스가 성공적으로 복원불가."
 fi
-
-echo "NFS 서비스가 성공적으로 원래 상태로 복원되었습니다."
-
 
 cat $result
 
