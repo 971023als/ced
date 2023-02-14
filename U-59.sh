@@ -22,26 +22,29 @@ EOF
 
 BAR
 
-# 숨김 파일 및 디렉토리 정의
-hidden_files=$(sudo find / -type f -name ".*" ! -path "/run/user/1000/gvfs/*")
-hidden_dirs=$(sudo find / -type d -name ".*" ! -path "/run/user/1000/gvfs/*")
+# 변수 설정
+backup_dir="/path/to/backup/dir"
+source_dir="/"
 
-# 원치 않거나 의심스러운 파일이나 디렉토리가 있는지 확인
-for file in $hidden_files; do
-  if [[ $(basename $file) =~ "unwanted-file" ]]; then
-    echo "Found unwanted file: $file"
-     # 파일 삭제 또는 알림 전송과 같은 원하는 작업을 수행합니다.
-    sudo rm $file
-  fi
-done
+# 백업 디렉토리(존재하지 않는 경우) 생성
+if [ ! -d "$backup_dir" ]; then
+    mkdir "$backup_dir"
+fi
 
-for dir in $hidden_dirs; do
-  if [[ $(basename $dir) =~ "suspicious-dir" ]]; then
-    echo "Found suspicious directory: $dir"
-    # 디렉터리 삭제 또는 알림 전송과 같은 원하는 작업을 수행합니다.
-    sudo rm -r $dir
-  fi
-done
+# 숨겨진 파일 백업
+find / -type f -name ".*" ! -path "/run/user/1000/gvfs/*" -exec cp --parents {} "$backup_dir" \;
+
+# 숨겨진 디렉터리 백업
+find / -type d -name ".*" ! -path "/run/user/1000/gvfs/*" -exec cp -r --parents {} "$backup_dir" \;
+
+#--------------------------------------------------------------------------------------------------
+
+# 변수 설정
+backup_dir="/path/to/backup/dir"
+source_dir="/"
+
+# 숨겨진 파일 및 디렉터리 복구
+rsync -a --delete "$backup_dir" "$source_dir"
 
 
 

@@ -43,7 +43,7 @@ for file in "${files[@]}"; do
     # 백업이 성공적으로 생성되었음을 나타내는 메시지 표시
     OK "시스템이 성공적으로 백업되었습니다.: $file$prefix$current_time"
   else
-  INFO "$file 을 찾을 수 없습니다"
+    INFO "$file 을 찾을 수 없습니다"
   fi
 done
 
@@ -77,7 +77,7 @@ for file in "${files[@]}"; do
       WARN "백업 파일을 찾을 수 없습니다. 시스템을 복원할 수 없습니다.: $oldest_backup"
     fi
     else
-    INFO "$file 을 찾을 수 없습니다"
+      INFO "$file 을 찾을 수 없습니다"
     fi
 done
 
