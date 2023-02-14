@@ -7,40 +7,82 @@ BAR
 CODE [U-20] Anonymous FTP 비활성화
 
 cat << EOF >> $result
+
 [양호]: Anonymous FTP (익명 ftp) 접속을 차단한 경우
+
 [취약]: Anonymous FTP (익명 ftp) 접속을 차단하지 않은 경우
+
 EOF
 
 BAR
 
 TMP1=`SCRIPTNAME`.log
 
->$TMP1 
+>$TMP1  
 
-# vsftpd 구성 파일 백업
-cp /etc/vsftpd.conf /etc/vsftpd.conf.bak
 
-# FTP 사용자 복원
-sudo useradd ftp
 
-# vsftpd.conf 파일의 경로 설정
-vsftpd_conf_file="/etc/vsftpd.conf"
+# 백업할 원본 파일 배열 설정
+files=("/etc/vsftpd.conf")
 
-# vsftpd.conf 파일이 있는지 확인합니다.
-if [ -f $vsftpd_conf_file ]; then
-  # "anonymous_enable=NO" 행을 제거합니다(있는 경우)
-  sed -i '/^anonymous_enable=NO/d' $vsftpd_conf_file
-else
-  # 파일을 찾을 수 없음
-  INFO " $vsftpd_conf_file 파일을 찾을 수 없습니다."
-fi
+# 백업 디렉터리 설정
+# backup_dir="/backup"
 
-# 백업에서 원래 vsftpd.conf 파일 복원
-if [ -f $vsftpd_conf_file.bak ]; then
-  mv $vsftpd_conf_file.bak $vsftpd_conf_file
-fi
+# 백업 파일의 접두사 설정
+prefix="_backup_"
 
-INFO "익명 FTP가 원래 상태로 복원되었습니다."
+# 현재 날짜와 시간을 알다
+current_time=$(date +%Y%m%d_%H%M%S)
+
+# 각 원본 파일을 반복합니다
+for file in "${files[@]}"; do
+  if [ -f "$file" ]; then
+  # 각 원본 파일을 반복합니다
+    # create a new backup file using the current time in the file name
+    cp -p "$file" "$file$prefix$current_time"
+    # 백업이 성공적으로 생성되었음을 나타내는 메시지 표시
+    OK "시스템이 성공적으로 백업되었습니다.: $file$prefix$current_time"
+  else
+    INFO "$file 을 찾을 수 없습니다"
+  fi
+done
+
+
+# --------------------------------------------------------------------------------------
+
+
+# 원본 파일 배열 설정
+files=("/etc/vsftpd.conf")
+
+# 백업 디렉터리 설정
+# backup_dir="/backup"
+
+# 백업 파일에 대한 접두사 설정
+prefix="_backup_"
+
+# 각 원본 파일을 반복합니다
+for file in "${files[@]}"; do
+  # 각 원본 파일에 대해 가장 오래된 백업 파일 찾기
+  oldest_backup=$(ls -t "$file$prefix"* | tail -1)
+  if [ -f "$file" ]; then
+    #각 원본 파일에 대해 가장 오래된 백업 파일이 있는지 확인
+    if [ -f "$oldest_backup" ]; then
+      # 가장 오래된 백업 파일을 원래 파일로 복원
+      cp -p "$oldest_backup" "$file"
+      # 복원이 성공했음을 나타내는 메시지를 표시
+      OK "시스템이 성공적으로 원래 상태로 복원되었습니다.: $oldest_backup to $file"
+    else
+      # 가장 오래된 백업 파일이 없음을 나타내는 메시지를 표시
+      WARN "백업 파일을 찾을 수 없습니다. 시스템을 복원할 수 없습니다.: $oldest_backup"
+    fi
+    else
+    INFO "$file 을 찾을 수 없습니다"
+    fi
+done
+
+
+
+
 
 cat $result
 
