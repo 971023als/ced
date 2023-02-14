@@ -45,9 +45,9 @@ done
 rm $TMP1
 
 # Print the result
-OK "Original state has been successfully restored."
+OK "성공적인 복원."
 else
-WARN "Log file does not exist, no changes were made to the system."
+WARN "그 파일이 존재하지 않아 변경사항을 되돌릴 수 없었음."
 fi
 
 

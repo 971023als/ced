@@ -29,9 +29,9 @@ sudo chmod $ORIG_PERM /etc/shadow
 
 # Check if the changes were successful and print a message
 if [ "$ORIG_OWNER" == "$(stat -c '%U' /etc/shadow)" ] && [ "$ORIG_GROUP" == "$(stat -c '%G' /etc/shadow)" ] && [ "$ORIG_PERM" == "$(stat -c '%a' /etc/shadow)" ]; then
-  OK "The original state of /etc/shadow has been successfully restored."
+  OK "/etc/shadow 파일이 성공적으로 원래 상태로 복원."
 else
-  WARN "The original state of /etc/shadow could not be restored."
+  WARN "/etc/shadow 파일의 원래 상태를 복원 불가."
 fi
 
 

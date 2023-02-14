@@ -31,9 +31,9 @@ sudo chmod $ORIG_PERM /etc/services
 
 # Check if the changes were successful and print a message
 if [ "$ORIG_OWNER" == "$(stat -c '%U' /etc/services)" ] && [ "$ORIG_GROUP" == "$(stat -c '%G' /etc/services)" ] && [ "$ORIG_PERM" == "$(stat -c '%a' /etc/services)" ]; then
-  OK "The original state of /etc/services has been successfully restored."
+  OK "파일의 원래 상태를 복원."
 else
-  WARN "The original state of /etc/services could not be restored."
+  WARN "파일의 원래 상태를 복원하지 못했음."
 fi
 
 

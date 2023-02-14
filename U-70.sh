@@ -29,9 +29,9 @@ if [ -e "/etc/rc2.d/S88sendmail_bak" ]; then
   # Start the outgoing mail process
   /etc/rc2.d/S88sendmail start
 
-  INFO "The original state of the SMTP service was recovered."
+  INFO "SMTP 서비스의 원래 상태가 복구되었습니다."
 else
-  WARN "The original state of the SMTP service was not found. Restoration failed."
+  WARN "SMTP 서비스의 원래 상태를 찾을 수 없어서 복원이 실패했음을 나타냅니다."
 fi
 
 cat $result

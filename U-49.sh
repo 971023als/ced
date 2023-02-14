@@ -31,6 +31,7 @@ else
 fi
 done
 
+
 # 최근에 삭제된 기본 계정이 아닌 계정 목록 가져오기
 deleted_users=$(grep "Removing non-default account" $TMP1 | awk '{print $NF}')
 

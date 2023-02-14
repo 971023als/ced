@@ -32,9 +32,9 @@ ls /mnt/nfs
 
 # Check if the NFS service is running
 if sudo service nfs status | grep -q "is running"; then
-  OK "NFS service restored successfully."
+  OK "NFS 서비스가 성공적으로 복원되었음."
 else
-  WARN "NFS service could not be restored."
+  WARN "NFS 서비스가 성공적으로 복원불가."
 fi
 
 

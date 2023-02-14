@@ -28,12 +28,12 @@ if [ $original_owner != "root" ] || [ $original_permissions -gt 644 ]; then
   chown $original_owner "$filename"
   chmod $original_permissions "$filename"
   if [ $? -eq 0 ]; then
-    OK "Original state was recovered successfully."
+    OK "원래 상태가 성공적으로 복구되었습니다."
   else
-    WARN "Original state could not be recovered."
+    WARN "원래 상태를 복구하지 못했음을 나타냅니다."
   fi
 else
-  INFO "No change needed. File already in original state."
+  INFO "이미 원래 상태의 파일이 있습니다.."
 fi
 
 cat $result

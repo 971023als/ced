@@ -36,10 +36,10 @@ function restore_state {
     done < "hidden_dirs_backup.txt"
 
     # Print that the original state was recovered
-    OK "The original state was recovered successfully."
+    OK "원래 상태가 성공적으로 복원되었습니다.."
   else
     # Print that the original state was not recovered
-    WARN "The original state could not be recovered because the backup files were not found."
+    WARN "백업 파일이 없어서 원래 상태를 복원할 수 없습니다."
   fi
 }
 
@@ -48,7 +48,7 @@ if [ ! -z "$(sudo find / -type f -name ".*" ! -path "/run/user/1000/gvfs/*")" ] 
   # Restore the original state
   restore_state
 else
-  INFO "No problem was detected while removing the hidden files and directories."
+  INFO "숨겨진 파일 및 디렉토리를 제거하는 동안 문제가 발견되지 않았습니다.."
 fi
 
 

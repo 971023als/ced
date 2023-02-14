@@ -27,12 +27,12 @@ for file in "${files[@]}"; do
     original_contents=`cat "$file"`
     echo "$original_contents" > "$file"
     if [ $? -eq 0 ]; then
-      OK "Original state was recovered for $file."
+      OK "파일 $file 의 원래 상태가 복구되었습니다."
     else
-      WARN "Original state could not be recovered for $file."
+      WARN "파일 $file의 원래 상태를 복구하지 못했음을 나타냅니다."
     fi
   else
-    INFO "$file does not exist. Skipping."
+    INFO "$file  파일이 존재하지 않습니다. 건너뜁니다.."
   fi
 done
 

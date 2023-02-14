@@ -33,9 +33,9 @@ if [ $securety_diff -ne 0 ] || [ $login_diff -ne 0 ]; then
   # Replace the modified files with the backup files
   cp /etc/securety.bak /etc/securety
   cp /etc/pam.d/login.bak /etc/pam.d/login
-  OK "Original state recovered."
+  OK "정상적인 상태로 복구."
 else
-  WARN "Original state was not recovered."
+  WARN "이전 상태가 복구되지 않았음."
 fi
 
 

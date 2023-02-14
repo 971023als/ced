@@ -25,12 +25,12 @@ function restore_device_files() {
     sudo cp -R /path/to/backup/device/files/. /dev/
     # Check if the device files were restored
     if [ -f "/dev/file1" ] && [ -f "/dev/file2" ] && [ -f "/dev/file3" ]; then
-      OK "The device files have been restored."
+      OK "복원 작업이 성공적으로 수행."
     else
-      WARN "The device files could not be restored."
+      WARN "복원 작업이 실패."
     fi
   else
-    INFO "The device files do not exist."
+    INFO "디바이스 파일이 존재하지 않는 경우."
   fi
 }
 

@@ -31,9 +31,9 @@ sudo chmod $ORIG_PERM /etc/rsyslog.conf
 
 # Check if the changes were successful and print a message
 if [ "$ORIG_OWNER" == "$(stat -c '%U' /etc/rsyslog.conf)" ] && [ "$ORIG_GROUP" == "$(stat -c '%G' /etc/rsyslog.conf)" ] && [ "$ORIG_PERM" == "$(stat -c '%a' /etc/rsyslog.conf)" ]; then
-  OK "The original state of /etc/rsyslog.conf has been successfully restored."
+  OK "/etc/xinetd.conf 파일을 복원하기 위한 코드."
 else
-  WARN "The original state of /etc/rsyslog.conf could not be restored."
+  WARN "etc/xinetd.conf 파일의 원래 상태가 복원."
 fi
 
 

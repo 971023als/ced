@@ -22,18 +22,18 @@ invalid_owner_files=$(find / -nouser 2>/dev/null)
 
 # Check if there are any files with invalid owners
 if [ -z "$invalid_owner_files" ]; then
-  OK "No files or directories with invalid owners found"
+  OK "유효성 검사에서 문제가 없음"
 else
   # Get a list of backup files
   backup_files=$(ls -1 /etc/*.bak 2>/dev/null)
 
   # Check if there are any backup files
   if [ -z "$backup_files" ]; then
-    WARN "No backup files found to restore the original state"
+    WARN "백업 파일이 없어서 원래 상태를 복원할 수 없음"
   else
     # Restore the original state
     sudo chown root $backup_files
-    OK "The original state has been successfully restored"
+    OK "이전 상태로 복구되었음"
   fi
 fi
 

@@ -17,31 +17,11 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Set log file path
-log_file="/var/log/patch.log"
+INFO "이 부분은 백업 파일 관련한 항목이 아닙니다"
 
-# Verify that the /var/log/patch.log file exists
-if [ -e $log_file ]; then
-  # Check if the log file contains information about installed patches
-  if grep -q "Patches installed" $log_file; then
-    # Get the list of installed patches
-    installed_patches=`grep "Patches installed" $log_file | awk '{print $3}'`
-    
-    # Uninstall the patches
-    sudo yum remove $installed_patches
+#---------------------------------------------------
 
-    # Check if the patches were successfully removed
-    if [ $? -eq 0 ]; then
-      OK "Patches were successfully uninstalled."
-    else
-      WARN "Unable to uninstall the patches."
-    fi
-  else
-    OK "No patches were installed."
-  fi
-else
-  WARN "$log_file does not exist."
-fi
+INFO "이 부분은 복구와 관련된 항목이 아닙니다"
 
 cat $result
 

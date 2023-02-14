@@ -25,12 +25,12 @@ function restore_permissions() {
     chmod 644 "/path/to/world/writeable/file"
     # Check if the permissions were restored
     if [ `stat -c "%a" "/path/to/world/writeable/file"` == "644" ]; then
-      OK "The original permissions have been restored."
+      OK "파일 권한이 성공적으로 복원되었다는 메시지."
     else
-      WARN "The original permissions could not be restored."
+      WARN "파일 권한을 복원할 수 없다는 경고 메시지."
     fi
   else
-    INFO "The world writeable file does not exist."
+    INFO "해당 파일이 존재하지 않는다는 정보 메시지."
   fi
 }
 

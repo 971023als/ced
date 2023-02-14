@@ -54,9 +54,9 @@ if [ $(stat -c "%a" /etc/crontab) -eq 644 ] &&
    [ $(stat -c "%a" /etc/cron.deny) -eq 644 ] &&
    [ $(stat -c "%a" /var/spool/cron*) -eq 770 ] &&
    [ $(stat -c "%a" /var/spool/cron/crontabs/) -eq 700 ]; then
-   OK "Original state has been restored"
+   OK "원래 상태를 복원"
 else
-   WARN "Original state has not been restored"
+   WARN "복원하지 못함"
 fi
 
 

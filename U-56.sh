@@ -25,11 +25,11 @@ sudo sed -i '/UMASK/d' /etc/profile
 
 # Check if UMASK has been removed from /etc/profile
 if ! grep -q "UMASK=022" /etc/profile; then
-  OK "UMASK has been successfully removed from /etc/profile."
+  OK "/etc/profile의 원래 상태를 복원할 수 있는 경우."
 else
   # Restore the original state of /etc/profile
   sudo cp /etc/profile.bak /etc/profile
-  WARN "The original state of /etc/profile could not be restored."
+  WARN "/etc/profile의 원래 상태를 복원할 수 없는 경우"
 fi
 
 cat $result

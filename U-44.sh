@@ -25,12 +25,12 @@ if [ -n "$username" ]; then
   usermod -u 0 $username
 
   if [ $? -eq 0 ]; then
-    OK "The original state has been restored successfully."
+    OK "성공적으로 복원."
   else
-    WARN "The original state could not be restored."
+    WARN "복원 불가."
   fi
 else
-  INFO "An account with the same UID as the root account cannot be found."
+  INFO "루트 계정과 동일한 UID를 가진 계정을 찾을 수 없는 경우."
 fi
 
 cat $result

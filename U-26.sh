@@ -27,9 +27,9 @@ sudo service automount start
 
 # Check if the Auto Mount service is running
 if ps -ef | grep automount | awk '{print $1}' | grep -q "online"; then
-  OK "Automount service restored successfully."
+  OK "성공적으로 복원."
 else
-  WARN "Automount service could not be restored."
+  WARN "복원 실패."
 fi
 
 

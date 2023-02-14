@@ -34,9 +34,9 @@ sudo chmod [644] $HOME/.rhosts
 
 # Check if the restore was successful
 if [ -f /etc/hosts.equiv ] && [ -f $HOME/.rhosts ]; then
-  OK "Successfully restored the original state of /etc/hosts.equiv and $HOME/.rhosts"
+  OK "/etc/hosts.equiv 및 $HOME/.rhosts의 원래 상태가 성공적으로 복원되었습니다"
 else
-  WARN "Restore failed"
+  WARN "복원 실패"
 fi
 
 

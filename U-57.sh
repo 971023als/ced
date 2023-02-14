@@ -40,9 +40,9 @@ sudo chown $original_owner:$original_group $line
 sudo chmod $original_permissions $line
 
 if [[ $permissions == *"$original_permissions"* ]] && [[ $owner == *"$original_owner"* ]] && [[ $group == *"$original_group"* ]]; then
-    OK "Recovered: $line"
+    OK "복원: $line"
 else
-    WARN "Not recovered: $line"
+    WARN "복원 불가: $line"
 fi
 fi
 done

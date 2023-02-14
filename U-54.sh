@@ -22,9 +22,9 @@ if grep -q "TMOUT=600" /etc/profile; then
   # Remove the line containing TMOUT from /etc/profile
   sed -i '/TMOUT=600/d' /etc/profile
   sed -i '/export TMOUT/d' /etc/profile
-  INFO "Removed TMOUT from /etc/profile."
+  INFO "해당 작업이 성공적으로 수행."
 else
-  OK "TMOUT was not found in /etc/profile."
+  OK "해당 작업이 수행되지 않았음."
 fi
 
 cat $result

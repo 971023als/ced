@@ -26,9 +26,9 @@ sudo sed -i "s#^ftp:.*#$original_entry#" /etc/passwd
 # Check the shell of the FTP account to see the changes
 ftp_shell=$(grep "^ftp:" /etc/passwd | awk -F: '{print $7}')
 if [ "$ftp_shell" == "$(echo $original_entry | awk -F: '{print $7}')" ]; then
-OK "The shell of the FTP account is set to its original value."
+OK "FTP 계정의 셸이 원래 값으로 복원."
 else
-INFO "The shell of the FTP account cannot be set to its original value."
+INFO "FTP 계정의 셸을 원래 값으로 설정할 수 없음."
 fi
 
 cat $result

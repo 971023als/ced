@@ -36,7 +36,7 @@ current_owner=$(stat -c '%U' $file)
 current_permission=$(stat -c '%a' $file)
 
 if [ "$original_owner" != "$current_owner" ] || [ "$original_permission" != "$current_permission" ]; then
-echo "Recovering $file to its original state..."
+INFO "원래 상태를 복원하려는 중"
 chown $original_owner $file
 chmod $original_permission $file
 OK "$file was recovered."

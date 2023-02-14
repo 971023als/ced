@@ -24,7 +24,7 @@ TMP1=`SCRIPTNAME`.log
 
 # Start SNMP service
 sudo service snmpd start
-OK "Started SNMP service"
+OK "SNMP 서비스가 시작되었습니다."
 
 
 cat $result

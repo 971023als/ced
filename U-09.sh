@@ -25,9 +25,9 @@ sudo chown $ORIGINAL_OWNER:$ORIGINAL_GROUP /etc/hosts
 sudo chmod $ORIGINAL_PERMISSIONS /etc/hosts
 
 if [ $(stat -c '%U' /etc/hosts) == "$ORIGINAL_OWNER" ] && [ $(stat -c '%G' /etc/hosts) == "$ORIGINAL_GROUP" ] && [ $(stat -c '%a' /etc/hosts) == "$ORIGINAL_PERMISSIONS" ]; then
-  OK "The original state of the /etc/hosts file has been restored."
+  OK "원래 상태를 복원."
 else
-  WARN "The original state of the /etc/hosts file could not be restored."
+  WARN "원래 상태를 복원할 수 없음."
 fi
 
 

@@ -30,9 +30,9 @@ chmod 644 /etc/at.deny
 
 # Check if restoration was successful
 if [[ "$(stat -c %a /usr/bin/at)" == "755" && "$(stat -c %U /usr/bin/at)" == "root" && "$(stat -c %a /etc/at.deny)" == "644" && "$(stat -c %U /etc/at.deny)" == "root" ]]; then
-  OK "Restoration was successful."
+  OK "복원이 성공했습니다."
 else
-  WARN "Restoration was not successful."
+  WARN "복원이 성공하지 않았음을 나타냅니다."
 fi
 
 cat $result

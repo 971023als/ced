@@ -28,9 +28,9 @@ if [ "$(stat -c %U /etc/xinetd.conf)" != "root" ] || [ "$(stat -c %a /etc/xinetd
   sudo chown adiosl /etc/xinetd.conf
   sudo chmod 644 /etc/xinetd.conf
 
-  OK "The original state of the file /etc/xinetd.conf has been restored."
+  OK "파일의 원래 상태가 복원."
 else
-  WARN "The file /etc/xinetd.conf has not been recovered."
+  WARN "파일의 복원하지 못했다는 것."
 fi
 
 

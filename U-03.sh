@@ -22,9 +22,9 @@ TMP1=`SCRIPTNAME`.log
 
 # Restore the original state
 if cp /etc/pam.d/common-auth.bak /etc/pam.d/common-auth; then
-    OK "The original state has been restored."
+    OK "복원에 성공."
 else
-    WARN "The original state could not be restored."
+    WARN "복원에 실패."
 fi
 
 

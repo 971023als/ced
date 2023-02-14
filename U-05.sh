@@ -29,9 +29,9 @@ source /etc/profile
 
 # Check if PATH environment variable still contains "."
 if [[ "$PATH" == *"."* ]]; then
-  OK "Problem has not been recovered. PATH environment variable still contains '.'"
+  OK "PATH 환경 변수가 여전히 "."(현재 디렉토리)를 포함하고 있음"
 else
-  WARN "Problem has been recovered. PATH environment variable no longer contains '.'"
+  WARN "PATH 환경 변수에서 "."(현재 디렉토리)가 더 이상 포함되지 않았음"
 fi
 
 

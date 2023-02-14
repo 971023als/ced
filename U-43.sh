@@ -17,24 +17,11 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Define the original state variables
-ORIG_UTMP="/var/log/utmp.original"
-ORIG_XFERLOG="/var/log/xferlog.original"
+INFO "이 부분은 백업 파일 관련한 항목이 아닙니다"
 
-# Check if the original state exists
-if [ -e "$ORIG_UTMP" ] && [ -e "$ORIG_XFERLOG" ]; then
-  # Restore the original state of /var/log/utmp
-  rm -f /var/log/utmp
-  mv "$ORIG_UTMP" /var/log/utmp
+#---------------------------------------------------
 
-  # Restore the original state of /var/log/xferlog
-  rm -f /var/log/xferlog
-  mv "$ORIG_XFERLOG" /var/log/xferlog
-
-  OK "Original state restored."
-else
-  WARN "Original state not found. Nothing to restore."
-fi
+INFO "이 부분은 복구와 관련된 항목이 아닙니다"
 
 cat $result
 

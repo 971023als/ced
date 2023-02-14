@@ -25,9 +25,9 @@ sudo mv /etc/rc.d/rc2.d/_S60nfs /etc/rc.d/rc2.d/S60nfs
 
 # Check if the NFS processes are running
 if ps -ef | egrep "nfs|statd|lockd" | awk '{print $2}' &> /dev/null; then
-  OK "NFS service restored successfully."
+  OK "NFS 서비스가 성공적으로 복원되었습니다.."
 else
-  WARN "NFS service could not be restored."
+  WARN "NFS 서비스가 복원되지 않았음을 나타내는 경고가 표시."
 fi
 
 

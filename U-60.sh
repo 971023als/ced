@@ -26,12 +26,12 @@ sudo yum remove ssh -y
 
 # Check if SSH has been successfully uninstalled
 if [ ! -f /usr/sbin/sshd ]; then
-OK "SSH has been successfully uninstalled."
+OK "SSH 제거 작업 성공."
 else
-WARN "SSH has not been uninstalled."
+WARN "SSH 제거 작업 실패."
 fi
 else
-INFO "SSH is already uninstalled."
+INFO "SSH 이미 제거."
 fi
 
 cat $result

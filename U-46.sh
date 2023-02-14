@@ -27,12 +27,12 @@ if grep -q "PASS_MIN_LEN 8" /etc/login.defs; then
     # Replace "PASS_MIN_LEN" with "#PASS_MIN_LEN"
     sudo sed -i 's/PASS_MIN_LEN/#PASS_MIN_LEN/g' /etc/login.defs
 
-    OK "Password minimum length setting has been restored to its original state."
+    OK "비밀번호 최소 길이가 성공적으로 원래 상태로 복원."
   else
-    WARN "Password minimum length setting could not be restored to its original state."
+    WARN "비밀번호 최소 길이를 원래 상태로 복원하지 못했음."
   fi
 else
-  INFO "Password minimum length setting has not been changed."
+  INFO "메시지는 설정이 변경되지 않았음."
 fi
 
 cat $result

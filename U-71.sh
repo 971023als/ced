@@ -47,9 +47,9 @@ echo "ServerSignature On" >> "$filename"
 fi
 
 if cmp -s "$filename" "$TMP2"; then
-  OK "Recovery is successful."
+  OK "복구가 성공했습니다."
 else
-  WARN "Recovery failed."
+  WARN "복구가 실패했음을 나타냅니다."
 fi
 
 

@@ -26,10 +26,10 @@ if [ "$file_owner" != "root" ] || [ "$file_permission" -gt 644 ]; then
   # If the owner or permissions have changed, restore the original owner and permissions
   sudo chown $(stat -c %U:%G /etc/passwd.bak) /etc/passwd
   sudo chmod $(stat -c %a /etc/passwd.bak) /etc/passwd
-  OK "The /etc/passwd file has been restored to its original state."
+  OK "파일의 소유자와 권한이 변경되었을 때, 복원이 완료."
 else
   # If the owner and permissions have not changed, print a message indicating that it has not been restored
-  WARN "The /etc/passwd file has not been restored, as it is already in its original state."
+  WARN "파일의 소유자와 권한이 변경되지 않은 경우 이미 복원"
 fi
 
 

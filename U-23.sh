@@ -22,33 +22,33 @@ echo "Restoring original state of DoS attack vulnerable services..."
 # Check if echo service file exists and restore its original state
 if [ -f /etc/xinetd.d/echo ]; then
     rm /etc/xinetd.d/echo
-    OK "echo service file has been restored."
+    OK "echo 서비스 파일이 복원되었습니다.."
 else
-    WARN "echo service file was not found."
+    WARN "echo 서비스 파일을 찾을 수 없습니다."
 fi
 
 # Check if discard service file exists and restore its original state
 if [ -f /etc/xinetd.d/discard ]; then
     rm /etc/xinetd.d/discard
-    OK "discard service file has been restored."
+    OK "discard 서비스 파일이 복원되었습니다."
 else
-    WARN "discard service file was not found."
+    WARN "discard 서비스 파일을 찾을 수 없습니다."
 fi
 
 # Check if daytime service file exists and restore its original state
 if [ -f /etc/xinetd.d/daytime ]; then
     rm /etc/xinetd.d/daytime
-    OK "daytime service file has been restored."
+    OK "daytime 서비스 파일이 복원되었습니다."
 else
-    WARN "daytime service file was not found."
+    WARN "daytime 서비스 파일을 찾을 수 없습니다."
 fi
 
 # Check if chargen service file exists and restore its original state
 if [ -f /etc/xinetd.d/chargen ]; then
     rm /etc/xinetd.d/chargen
-    OK "chargen service file has been restored."
+    OK "chargen 서비스 파일이 복원되었습니다."
 else
-    WARN "chargen service file was not found."
+    WARN "chargen 서비스 파일을 찾을 수 없습니다."
 fi
 
 

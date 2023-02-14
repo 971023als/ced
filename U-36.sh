@@ -33,9 +33,9 @@ sudo systemctl restart httpd
 
 # Check if Apache service is running
 if systemctl is-active --quiet httpd; then
-  OK "Apache service has been successfully restored."
+  OK "Apache 서비스가 성공적으로 복원되었습니다."
 else
-  WARN "Apache service has not been restored."
+  WARN "Apache 서비스가 복원되지 않았습니다."
 fi
 
 

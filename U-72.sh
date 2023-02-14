@@ -35,9 +35,9 @@ cp "$filename.bak" "$filename"
 # Check if the original file was restored successfully
 difference=$(diff "$filename" "$filename.bak")
 if [ -z "$difference" ]; then
-    OK "Recovered: $filename"
+    OK "복구 완료: $filename"
 else
-    WARN "Not recovered: $filename"
+    WARN "복구 불가능: $filename"
 fi
 
 

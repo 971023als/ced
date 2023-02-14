@@ -50,9 +50,9 @@ sudo update-rc.d rpc.ypupdated enable
 # Check if the NIS and NIS+ services are running
 status=$(service ypserv status | grep running)
 if [ "$status" == "running" ]; then
-  OK "NIS and NIS+ services are recovered and running."
+  OK "NIS 및 NIS+ 서비스가 복구."
 else
-  WARN "NIS and NIS+ services are not recovered."
+  WARN "NIS 및 NIS+ 서비스가 복구되지 않았습니다."
 fi
 
 

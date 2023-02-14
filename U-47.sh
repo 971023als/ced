@@ -28,9 +28,9 @@ if [ -f "$TMP1" ]; then
   # Set the original password maximum age value
   sudo sed -i "s/^PASS_MAX_DAYS.*/$original_value/" "$DEF_FILE"
 
-  OK "The original password maximum age value has been restored."
+  OK "T임시 파일이 존재하지 않아 원래의 암호 최대 사용 기간 값을 복구했음."
 else
-  WARN "The original password maximum age value has not been recovered because the temporary file does not exist."
+  WARN "임시 파일이 존재하지 않아 원래의 암호 최대 사용 기간 값을 복구하지 못했음."
 fi
 
 cat $result

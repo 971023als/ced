@@ -31,9 +31,9 @@ sudo chmod $original_permissions /etc/vsftpd/ftpusers
 current_owner=$(stat -c "%U:%G" /etc/vsftpd/ftpusers)
 current_permissions=$(stat -c "%a" /etc/vsftpd/ftpusers)
 if [ "$current_owner" == "$original_owner" ] && [ "$current_permissions" == "$original_permissions" ]; then
-OK "The owner and permission settings of the ftpusers file are set to their original values."
+OK " ftpusers 파일의 소유자와 권한 설정이 원래 값으로 복원."
 else
-INFO "The owner and permission settings of the ftpusers file cannot be set to their original values."
+INFO "ftpusers 파일의 소유자와 권한 설정을 원래 값으로 되돌릴 수 없음."
 fi
 
 cat $result

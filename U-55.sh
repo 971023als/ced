@@ -19,9 +19,9 @@ TMP1=`SCRIPTNAME`.log
 
 if [ -f /etc/hosts.lpd.bak ]; then
   sudo cp /etc/hosts.lpd.bak /etc/hosts.lpd
-  OK "The original state of the file has been restored."
+  OK "파일의 원래 상태가 복원."
 else
-  WARN "The backup file could not be found. The original state of the file could not be restored."
+  WARN "파일의 원래 상태를 복원할 수 없음."
 fi
 
 cat $result

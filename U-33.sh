@@ -22,11 +22,10 @@ TMP1=`SCRIPTNAME`.log
 
 # Check if the DNS service is running
 if ps -ef | grep named &> /dev/null; then
-  OK "DNS service has been successfully restored."
+  OK "DNS 서비스가 성공적으로 복원되었습니다."
 else
-  WARN "DNS service has not been restored."
+  WARN "DNS 서비스가 복원되지 않았습니다."
 fi
-
 
 
 

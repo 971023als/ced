@@ -24,9 +24,9 @@ file="/etc/httpd/conf/httpd.conf"
 if grep -q "LimitRequestBody" $file; then
   # Remove the LimitRequestBody directive from the file
   sed -i '/LimitRequestBody/d' $file
-  OK "The original state has been restored."
+  OK "파일의 상태가 복원됨."
 else
-  WARN "The original state has not been recovered."
+  WARN "파일의 상태가 복원되지 않음."
 fi
 
 

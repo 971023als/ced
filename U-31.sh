@@ -28,9 +28,9 @@ sed -i "s/^R/$#R/" $file
 
 # Verify that the line has been modified
 if grep "$line" $file; then
-  OK "The original state has not been recovered"
+  OK "원래 상태가 복구되지 않았습니다"
 else
-  WARN "The original state has been successfully recovered"
+  WARN "원래 상태가 성공적으로 복구되었습니다"
 fi
 
 

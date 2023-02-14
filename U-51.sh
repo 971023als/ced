@@ -29,11 +29,11 @@ done
 CURRENT_GROUPS=$(cut -d: -f1 /etc/group)
 for group in $ORIGINAL_GROUPS; do
   if ! [[ "$CURRENT_GROUPS" =~ "$group" ]]; then
-    WARN "Failed to restore group $group"
+    WARN "각 그룹의 기본값이 복원 불가: $group"
   fi
 done
 
-OK "Groups successfully restored."
+OK "각 그룹의 기본값이 복원."
 
 
 cat $result

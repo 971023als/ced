@@ -20,25 +20,25 @@ TMP1=`SCRIPTNAME`.log
 # Restore tftp service
 if [ -f "/etc/xinetd.d/tftp.bak" ]; then
   sudo mv /etc/xinetd.d/tftp.bak /etc/xinetd.d/tftp
-  OK "tftp service restored successfully"
+  OK "tftp 서비스가 성공적으로 복원되었습니다"
 else
-  WARN "tftp service has not been restored as it was not backed up"
+  WARN "tftp 서비스가 백업되지 않았기 때문에 복원되지 않았습니다"
 fi
 
 # Restore talk service
 if [ -f "/etc/xinetd.d/talk.bak" ]; then
   sudo mv /etc/xinetd.d/talk.bak /etc/xinetd.d/talk
-  OK "talk service restored successfully"
+  OK "talk 서비스가 성공적으로 복원되었습니다"
 else
-  WARN "talk service has not been restored as it was not backed up"
+  WARN "talk 서비스가 복원되지 않았습니다"
 fi
 
 # Restore ntalk service
 if [ -f "/etc/xinetd.d/ntalk.bak" ]; then
   sudo mv /etc/xinetd.d/ntalk.bak /etc/xinetd.d/ntalk
-  OK "ntalk service restored successfully"
+  OK "ntalk 서비스가 성공적으로 복원되었습니다"
 else
-  WARN "ntalk service has not been restored as it was not backed up"
+  WARN "ntalk 서비스는 백업되지 않았기 때문에 복원되지 않았습니다"
 fi
 
 

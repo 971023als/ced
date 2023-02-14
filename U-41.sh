@@ -24,9 +24,9 @@ file="/etc/httpd/conf/httpd.conf"
 if grep -q "/home/ubuntu/newphp/" $file; then
   # Replace the DocumentRoot with the original default path "/var/www/html"
   sed -i 's|DocumentRoot.*|DocumentRoot "/var/www/html"|' $file
-  OK "The original state has been restored."
+  OK "원래 상태가 복원되었습니다."
 else
-  WARN "The original state has not been recovered."
+  WARN "원래 상태가 복원되지 않았습니다."
 fi
 
 cat $result

@@ -22,11 +22,11 @@ file="/etc/httpd/conf/httpd.conf"
 
 # Check if the original state has been recovered
 if grep -q "Options FollowSymLinks" $file; then
-  WARN "The original state has not been recovered."
+  WARN "복구 작업 실패."
 else
   # Replace "Options" with "Options FollowSymLinks"
   sed -i 's/Options/Options FollowSymLinks/g' $file
-  OK "The original state has been restored."
+  OK "복구 작업 성공."
 fi
 
 

@@ -29,9 +29,9 @@ sudo cp "$DEF_FILE" "$DEF_FILE.bak"
 if grep -q "Vulnerable: Password minimum age is not set" $result; then
   # Restore the original /etc/login.defs file
   sudo cp "$DEF_FILE.bak" "$DEF_FILE"
-  OK "The system has been restored to its original state."
+  OK "시스템이 원래 상태로 복원되었습니다."
 else
-  WARN "The system is not vulnerable."
+  WARN "시스템이 원래 상태로 복원 못했습니다.."
 fi
 
 cat $result

@@ -25,9 +25,9 @@ sudo sed -i '/sshd: ALL/d' /etc/hosts.deny
 
 # Check if the restore was successful
 if [ ! -f /etc/hosts.allow ] || [ ! -f /etc/hosts.deny ]; then
-  OK "Successfully restored the original state of /etc/hosts.allow and /etc/hosts.deny"
+  OK "복원 작업  성공"
 else
-  WARN "Restore failed"
+  WARN "복원 작업 실패"
 fi
 
 

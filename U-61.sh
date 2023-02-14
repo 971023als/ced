@@ -31,16 +31,16 @@ sudo /etc/rc.d/init.d/proftp start
 
 # Check if vsftpd service is running
 if sudo service vsftpd status | grep "running" > /dev/null; then
-  OK "vsftpd service is running."
+  OK "vsftpd 서비스가 실행 중."
 else
-  WARN "vsftpd service is not running."
+  WARN "vsftpd 서비스가 실행 중이 아니다."
 fi
 
 # Check if proftp service is running
 if sudo service proftp status | grep "running" > /dev/null; then
-  OK "proftp service is running."
+  OK "proftp 서비스가 정상적으로 실행."
 else
-  WARN "proftp service is not running."
+  WARN "proftp 서비스가 실행되고 있지 않음."
 fi
 
 cat $result

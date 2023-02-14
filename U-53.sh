@@ -29,12 +29,12 @@ if [ -f $TMP1 ]; then
   cp $TMP2 /etc/passwd
 
   if [ $? -eq 0 ]; then
-    OK "Recovered"
+    OK "성공적으로 복구"
   else
-    WARN "Not recovered"
+    WARN "문제가 발견되었지만 복구"
   fi
 else
-  INFO "No problem detected"
+  INFO "시스템에 문제가 발견되지 않았다는 것"
 fi
 
 

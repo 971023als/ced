@@ -26,9 +26,9 @@ sed -i 's/AllowOverride AuthConfig/AllowOverride None/g' $file
 
 # Check for changes
 if grep -q "AllowOverride None" $file; then
-OK "AllowOverride AuthConfig was replaced with AllowOverride None."
+OK "AllowOverride AuthConfig가 AllowOverride None으로 대체되었습니다.."
 else
-WARN "AllowOverride AuthConfig could not be replaced with AllowOverride None."
+WARN "AllowOverride AuthConfig를 AllowOverride None으로 대체할 수 없습니다."
 fi
 fi
 
