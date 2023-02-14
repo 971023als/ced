@@ -7,46 +7,77 @@ BAR
 CODE [U-27] RPC 서비스 확인		
 
 cat << EOF >> $result
+
 [양호]: 불필요한 RPC 서비스가 비활성화 되어 있는 경우
+
 [취약]: 불필요한 RPC 서비스가 활성화 되어 있는 경우
+
 EOF
 
 BAR
 
-TMP1=`SCRIPTNAME`.log
 
->$TMP1 
 
-# Backup files
-cp /etc/xinetd.d/finger /etc/xinetd.d/finger.bak
+# 백업할 원본 파일 배열 설정
+files=("/etc/xinetd.d/finger")
 
-# /etc/xinetd.d/에서 기존 finger 파일을 제거합니다
-if [ -f "/etc/xinetd.d/finger" ]; then
-  sudo rm /etc/xinetd.d/finger
-fi
+# 백업 디렉터리 설정
+# backup_dir="/backup"
 
-# 원본 핑거 파일 다시 만들기
-sudo echo "service finger
-{
-socket_type = stream
-wait = no
-user = nobody
-server = /usr/sbin/in.fingerd
-disable = no
-}" > /etc/xinetd.d/finger
+# 백업 파일의 접두사 설정
+prefix="_backup_"
 
-# xinetd 서비스를 다시 시작하여 변경 사항을 적용합니다
-sudo service xinetd restart
+# 현재 날짜와 시간을 알다
+current_time=$(date +%Y%m%d_%H%M%S)
 
-# 올바르게 작동하는지 점검하십시오
-finger localhost
+# 각 원본 파일을 반복합니다
+for file in "${files[@]}"; do
+  if [ -f "$file" ]; then
+    # create a new backup file using the current time in the file name
+    cp -p "$file" "$file$prefix$current_time"
+    # 백업이 성공적으로 생성되었음을 나타내는 메시지 표시
+    echo "Successfully created backup file: $file$prefix$current_time"
+    OK "시스템이 성공적으로 백업되었습니다.: $file$prefix$current_time"
+  else
+    INFO "$file 을 찾을 수 없습니다"
+  fi
+done
 
-# 문제가 있는 경우 오류 메시지를 인쇄하고 종료합니다
-if [ $? -ne 0 ]; then
-  WARN "RPC 핑거 서비스를 원래 상태로 복원할 수 없습니다."
-else
-  OK "RPC 핑거 서비스가 성공적으로 원래 상태로 복원되었습니다."
-fi
+
+# --------------------------------------------------------------------------------------
+
+
+# 원본 파일 배열 설정
+files=("/etc/xinetd.d/finger")
+
+# 백업 디렉터리 설정
+# backup_dir="/backup"
+
+# 백업 파일에 대한 접두사 설정
+prefix="_backup_"
+
+# 각 원본 파일을 반복합니다
+for file in "${files[@]}"; do
+  # 각 원본 파일에 대해 가장 오래된 백업 파일 찾기
+  oldest_backup=$(ls -t "$file$prefix"* | tail -1)
+  if [ -f "$file" ]; then
+    #각 원본 파일에 대해 가장 오래된 백업 파일이 있는지 확인
+    if [ -f "$oldest_backup" ]; then
+      # 가장 오래된 백업 파일을 원래 파일로 복원
+      cp -p "$oldest_backup" "$file"
+      # 복원이 성공했음을 나타내는 메시지를 표시
+      echo "Successfully restored the oldest backup file: $oldest_backup to $file"
+      OK "시스템이 성공적으로 원래 상태로 복원되었습니다.: $oldest_backup to $file"
+    else
+      # 가장 오래된 백업 파일이 없음을 나타내는 메시지를 표시
+      echo "The oldest backup file does not exist: $oldest_backup"
+      WARN "백업 파일을 찾을 수 없습니다. 시스템을 복원할 수 없습니다.: $oldest_backup"
+    fi
+  else
+    INFO "$file 을 찾을 수 없습니다"
+  fi
+done
+
 
 cat $result
 
