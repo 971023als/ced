@@ -21,23 +21,35 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
-# 백업 스크립트
-backup_file="/tmp/invalid_owner_files_$(date +%Y-%m-%d_%H-%M-%S).tar.gz"
-tar -czvf $backup_file /root/ --owner=root --group=root --mtime='UTC' --atime-preserve=system --selinux --acls --xattrs
+# 백업 디렉토리(존재하지 않는 경우) 생성
+if [ ! -d "$backup_dir" ]; then
+    mkdir -p $backup_dir
+fi
 
-# -----------------------------------------------------------------------------------------
-
-# 스크립트 복원
-restore_file=$(ls -1t /tmp/invalid_owner_files*.tar.gz 2>/dev/null | head -n1)
-if [ -f "$backup_file" ]; then
-  if [ -z "$restore_file" ]; then
-      WARN "백업 파일을 찾을 수 없습니다."
+# 잘못된 소유자가 있는 파일 찾기
+invalid_owner_files=$(find /root/ -nouser -print 2>/dev/null)
+if [ -f "$invalid_owner_files" ]; then
+  if [ -z "$invalid_owner_files" ]; then
+      WARN "백업할 파일이 없습니다."
   else
-    OK "$restore_file에서 복원 중"
-    tar -xzvf $restore_file -C /
+    cp -R $invalid_owner_files $backup_dir
+    OK "백업이 완료되었습니다."
   fi
 else
-  INFO "$file 을 찾을 수 없습니다"
+  INFO "$invalid_owner_files 을 찾을 수 없습니다"
+fi
+
+# 잘못된 소유자가 있는 백업 파일 찾기
+backup_files=$(find $backup_dir -type f -o -type d)
+if [ -f "$backup_files" ]; then
+  if [ -z "$backup_files" ]; then
+    INFO "백업된 파일을 찾을 수 없습니다."
+  else
+    cp -R $backup_files /root/
+    OK "복원이 완료되었습니다."
+  fi
+else
+  INFO "$backup_files 을 찾을 수 없습니다"
 fi
 
 cat $result
