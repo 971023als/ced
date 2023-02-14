@@ -25,21 +25,13 @@ INFO "이 부분은 백업 파일 관련한 항목이 아닙니다"
 
 
 # NFS 서비스 시작
-sudo service nfs start
+sudo systemctl start nfs-kernel-server
 
-# NFS 서비스의 상태를 확인합니다
-# sudo service nfs status
-
-# sudo mount 192.168.0.100:/nfs_share /mnt/nfs
-
-# NFS 공유에 액세스하여 NFS 공유가 올바르게 마운트되었는지 확인
-# ls /mnt/nfs
-
-# Check if the NFS service is running
-if sudo service nfs status | grep -q "is running"; then
-  OK "NFS 서비스가 성공적으로 복원되었음."
+# NFS 서비스의 상태를 확인
+if sudo systemctl status nfs-kernel-server | grep -q 'active (running)'; then
+  OK "NFS 서비스가 성공적으로 시작되었습니다."
 else
-  WARN "NFS 서비스가 성공적으로 복원불가."
+  WARN "NFS 서비스를 시작하지 못했습니다."
 fi
 
 cat $result
