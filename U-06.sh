@@ -4,11 +4,14 @@
 
 BAR
 
-CODE [U-06] 파일 및 디렉터리 소유자 설정
+CODE [U-06] 파일 및 디렉터리 소유자 설정 @@su 말고 sudo su 해야 함 @@
 
 cat << EOF >> $result
+
 [양호]: 소유자가 존재하지 않는 파일 및 디렉터리가 존재하지 않는 경우
+
 [취약]: 소유자가 존재하지 않는 파일 및 디렉터리가 존재하는 경우
+
 EOF
 
 BAR
@@ -17,27 +20,24 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Get the list of files with invalid owners
-invalid_owner_files=$(find / -nouser 2>/dev/null)
 
-# Check if there are any files with invalid owners
-if [ -z "$invalid_owner_files" ]; then
-  OK "유효성 검사에서 문제가 없음"
+backup_dir="./backup_nouser_nogroup"
+
+# 백업 디렉터리가 있는지 확인
+if [ -d "$backup_dir" ]; then
+  # 백업된 파일을 original location로 복사
+  for file in $(find "$backup_dir" -type f); do
+    original_file="$(echo "$file" | sed "s|$backup_dir||")"
+    cp -R "$file" "$original_file"
+  done
+
+  # 백업 디렉터리 제거
+  rm -rf "$backup_dir"
+
+  echo "Files have been recovered and backup directory has been deleted."
 else
-  # Get a list of backup files
-  backup_files=$(ls -1 /etc/*.bak 2>/dev/null)
-
-  # Check if there are any backup files
-  if [ -z "$backup_files" ]; then
-    WARN "백업 파일이 없어서 원래 상태를 복원할 수 없음"
-  else
-    # Restore the original state
-    sudo chown root $backup_files
-    OK "이전 상태로 복구되었음"
-  fi
+  echo "Backup directory not found. No recovery possible."
 fi
-
-
 
 cat $result
 
