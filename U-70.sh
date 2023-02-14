@@ -21,6 +21,10 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
+
+#  백업 파일 생성
+cp /etc/rc2.d/S88sendmail_bak /etc/rc2.d/S88sendmail
+
 # Check if sendmail init script is backed up
 if [ -e "/etc/rc2.d/S88sendmail_bak" ]; then
   # Move sendmail init script back to /etc/rc2.d

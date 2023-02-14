@@ -21,7 +21,9 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-# Restore the original state of the ftp service and login shell for the ftp account
+
+# /etc/passwd 백업 파일 생성
+cp /etc/passwd.bak /etc/passwd
 
 # Get the original state of the ftp service
 if [ -f "/tmp/ftp_service.bak" ]; then

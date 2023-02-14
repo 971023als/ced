@@ -17,6 +17,9 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
+# /etc/passwd 백업 파일 생성
+cp /etc/passwd.bak /etc/passwd
+
 # 백업 파일이 있는지 확인하십시오
 if [ -f "/path/to/backup/etc_passwd_backup" ]; then
   # /etc/passwd 파일의 백업 복원

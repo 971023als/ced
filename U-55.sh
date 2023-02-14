@@ -17,6 +17,9 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
+#  백업 파일 생성
+cp /etc/hosts.lpd.bak /etc/hosts.lpd
+
 if [ -f /etc/hosts.lpd.bak ]; then
   sudo cp /etc/hosts.lpd.bak /etc/hosts.lpd
   OK "파일의 원래 상태가 복원."

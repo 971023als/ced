@@ -17,6 +17,9 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1 
 
+#    백업 파일 생성
+cp /etc/mail/sendmail.cf.bak /etc/mail/sendmail.cf 
+
 # Specify file path
 file="/etc/mail/sendmail.cf"
 

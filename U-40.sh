@@ -17,6 +17,9 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
+#    백업 파일 생성
+cp /etc/httpd/conf/httpd.conf.bak /etc/httpd/conf/httpd.conf
+
 # Define the Apache configuration file
 file="/etc/httpd/conf/httpd.conf"
 

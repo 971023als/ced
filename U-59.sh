@@ -17,6 +17,17 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
+# 숨김 파일 및 디렉토리 정의
+hidden_files=$(sudo find / -type f -name ".*" ! -path "/run/user/1000/gvfs/*")
+
+#    백업 파일 생성
+cp $hidden_files.bak $hidden_files
+
+hidden_dirs=$(sudo find / -type d -name ".*" ! -path "/run/user/1000/gvfs/*")
+
+#    백업 파일 생성
+cp $hidden_dirs.bak $hidden_dirs
+
 # Define a function to restore the original state
 function restore_state {
   # Check if a backup of the hidden files and directories exists

@@ -22,9 +22,6 @@ DEF_FILE="/etc/login.defs"
 # Backup the /etc/login.defs file
 sudo cp "$DEF_FILE" "$DEF_FILE.bak"
 
-# Run the original script
-./u48.sh
-
 # Check if the result file has the vulnerable message
 if grep -q "Vulnerable: Password minimum age is not set" $result; then
   # Restore the original /etc/login.defs file
