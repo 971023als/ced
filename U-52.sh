@@ -7,8 +7,11 @@ BAR
 CODE [U-52] 동일한 UID 금지
 
 cat << EOF >> $result
+
 양호: 동일한 UID로 설정된 사용자 계정이 존재하지 않는 경우
+
 취약: 동일한 UID로 설정된 사용자 계정이 존재하는 경우
+
 EOF
 
 BAR
@@ -17,38 +20,65 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-# Check if the log file exists
-if [ -f $TMP1 ]; then
 
-# Read the log file and store the data in an array
-LOG_DATA=($(cat $TMP1))
+# 원본 파일 배열 설정
+files=("/etc/passwd")
 
-# Loop through the log data and restore the original state
-for data in "${LOG_DATA[@]}"; do
+# 백업 디렉터리 설정
+# backup_dir="/backup"
 
-# Split the log data into user and UID
-USER=$(echo $data | awk -F: '{print $1}')
-ORIG_UID=$(echo $data | awk -F: '{print $2}')
+# 백업 파일의 접두사 설정
+prefix="_backup_"
 
-# Check if the user exists in the system
-if id $USER >/dev/null 2>&1; then
+# 현재 날짜와 시간을 알다
+current_time=$(date +%Y%m%d_%H%M%S)
 
-# Change the user's UID to the original UID
-usermod -u $ORIG_UID $USER
-
-# Print the results
-INFO "UID of $USER changed back to $ORIG_UID"
-fi
+# 각 원본 파일을 반복합니다
+for file in "${files[@]}"; do
+  if [ -f "$file" ]; then
+  # 각 원본 파일을 반복합니다
+    # create a new backup file using the current time in the file name
+    cp -p "$file" "$file$prefix$current_time"
+    # 백업이 성공적으로 생성되었음을 나타내는 메시지 표시
+    OK "시스템이 성공적으로 백업되었습니다.: $file$prefix$current_time"
+  else
+    INFO "$file 을 찾을 수 없습니다"
+  fi
 done
 
-# Remove the log file
-rm $TMP1
 
-# Print the result
-OK "성공적인 복원."
-else
-WARN "그 파일이 존재하지 않아 변경사항을 되돌릴 수 없었음."
-fi
+# --------------------------------------------------------------------------------------
+
+
+# 원본 파일 배열 설정
+files=("/etc/passwd")
+
+# 백업 디렉터리 설정
+# backup_dir="/backup"
+
+# 백업 파일에 대한 접두사 설정
+prefix="_backup_"
+
+# 각 원본 파일을 반복합니다
+for file in "${files[@]}"; do
+  # 각 원본 파일에 대해 가장 오래된 백업 파일 찾기
+  oldest_backup=$(ls -t "$file$prefix"* | tail -1)
+  if [ -f "$file" ]; then
+    #각 원본 파일에 대해 가장 오래된 백업 파일이 있는지 확인
+    if [ -f "$oldest_backup" ]; then
+      # 가장 오래된 백업 파일을 원래 파일로 복원
+      cp -p "$oldest_backup" "$file"
+      # 복원이 성공했음을 나타내는 메시지를 표시
+      OK "시스템이 성공적으로 원래 상태로 복원되었습니다.: $oldest_backup to $file"
+    else
+      # 가장 오래된 백업 파일이 없음을 나타내는 메시지를 표시
+      WARN "백업 파일을 찾을 수 없습니다. 시스템을 복원할 수 없습니다.: $oldest_backup"
+    fi
+  else
+    INFO "$file 을 찾을 수 없습니다"
+  fi
+done
+ 
 
 
 cat $result
