@@ -26,6 +26,8 @@ mv /etc/rc2.d/S88sendmail_bak /etc/rc2.d/S88sendmail
 # 메일 보내기 서비스 시작
 service sendmail restart   
 
+INFO "백업 완료"
+
 cat $result
 
 echo ; echo 
