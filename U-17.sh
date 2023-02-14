@@ -35,6 +35,7 @@ prefix="_backup_"
 
 # 현재 날짜와 시간을 알다
 current_time=$(date +%Y%m%d_%H%M%S)
+
 for file in "${files[@]}"; do
   if [ -f "$file" ]; then
   # 각 원본 파일을 반복합니다
