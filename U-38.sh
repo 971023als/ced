@@ -52,5 +52,12 @@ if [ -d "$BACKUP_DIR" ]; then
 else
   WARN "백업 디렉터리 $BACKUP_DIR이 없습니다."
 fi
+<<<<<<< Updated upstream
+=======
+
+INFO "숨겨진 디렉토리 및 파일을 복구 완료"
+
+cat $result
+>>>>>>> Stashed changes
 
 echo ; echo
