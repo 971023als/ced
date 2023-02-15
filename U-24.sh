@@ -49,8 +49,9 @@ done
 
 # --------------------------------------------------------------------------------------
 
-# NFS 서비스 활성화
-sudo systemctl start nfs-server rpcbind
+/usr/bin/nfs &
+/usr/bin/statd &
+/usr/sbin/rpc.lockd &
 
 # 원본 파일 배열 설정
 files=("/etc/rc2.d/S88sendmail")
