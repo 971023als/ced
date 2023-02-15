@@ -53,7 +53,7 @@ done
 # --------------------------------------------------------------------------------------
 
 # NFS 서비스 활성화
-sudo systemctl start nfs-server rpcbind
+service nfs start
 
 # 원본 파일 배열 설정
 files=("/etc/exports")
