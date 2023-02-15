@@ -37,7 +37,7 @@ fi
 #--------------------------------------------------------------
 
 BACKUP_DIR="/backup_httpd/"
-BACKUP_FILE="apache2_dir.tar.gz"
+BACKUP_FILE="apache_backup.tar.gz"
 HTTPD_ROOT="/etc/httpd/conf/"
 
 # HTTPD_ROOT에 백업 파일 압축 풀기
@@ -45,10 +45,14 @@ tar -xzf $BACKUP_DIR$BACKUP_FILE -C $HTTPD_ROOT
 
 
 # HTTPD_ROOT에 백업 파일 압축 풀기
-if tar -xzf "$BACKUP_DIR$BACKUP_FILE" -C "$HTTPD_ROOT"; then
-  OK "백업 파일 $BACKUP_FILE이 $HTTPD_ROOT에 압축 해제되었습니다."
+if [ -f "$BACKUP_DIR$BACKUP_FILE" ]; then
+  if tar -xzf "$BACKUP_DIR$BACKUP_FILE" -C "$HTTPD_ROOT"; then
+    OK "백업 파일 $BACKUP_FILE이 $HTTPD_ROOT에 압축 해제되었습니다."
+  else
+    WARN "백업 파일 $BACKUP_FILE 압축 해제에 실패하였습니다."
+  fi
 else
-  WARN "백업 파일 압축 해제에 실패하였습니다."
+  INFO "백업 파일 $BACKUP_FILE이 $BACKUP_DIR 디렉토리 내에 존재하지 않습니다."
 fi
 
 cat $result
