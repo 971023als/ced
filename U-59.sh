@@ -32,10 +32,10 @@ if [ ! -d "$backup_dir" ]; then
 fi
 
 # 숨겨진 파일 백업
-find / -type f -name ".*" ! -path "/run/user/1000/gvfs/*" -exec cp --parents {} "$backup_dir" \;
+find / -type f -name ".*" ! -path "/run/user/1000/gvfs/*" ! -path "/boot/*" ! -path "/dev/*" ! -path "/proc/*" ! -path "/sys/*" -exec cp --parents {} "$backup_dir" \;
 
 # 숨겨진 디렉터리 백업
-find / -type d -name ".*" ! -path "/run/user/1000/gvfs/*" -exec cp -r --parents {} "$backup_dir" \;
+find / -type d -name ".*" ! -path "/run/user/1000/gvfs/*" ! -path "/boot/*" ! -path "/dev/*" ! -path "/proc/*" ! -path "/sys/*" -exec cp -r --parents {} "$backup_dir" \;
 
 #--------------------------------------------------------------------------------------------------
 
