@@ -34,11 +34,9 @@ do
   fi
 done
 
-INFO "복원완료"
-
 #------------------------------------------------------------------
 
-HTTPD_ROOT="/etc/apache2/apache2.conf"
+HTTPD_ROOT="/etc/httpd/conf/httpd.conf"
 UNWANTED_ITEMS="manual samples docs"
 BACKUP_DIR="/backup_httpd/"
 
@@ -54,8 +52,6 @@ if [ -d "$BACKUP_DIR" ]; then
 else
   WARN "백업 디렉터리 $BACKUP_DIR이 없습니다."
 fi
-
-INFO "복원완료"
 
 cat $result
 
