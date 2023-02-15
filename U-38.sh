@@ -22,7 +22,7 @@ TMP1=`SCRIPTNAME`.log
 
 HTTPD_ROOT="/etc/httpd/conf/httpd.conf"
 UNWANTED_ITEMS="manual samples docs"
-BACKUP_DIR="/backup_httpd"
+BACKUP_DIR="/backup_httpd/"
 
 # 원하지 않는 파일 백업
 mkdir -p "$BACKUP_DIR"
@@ -38,7 +38,7 @@ done
 
 HTTPD_ROOT="/etc/apache2/apache2.conf"
 UNWANTED_ITEMS="manual samples docs"
-BACKUP_DIR="/backup_httpd"
+BACKUP_DIR="/backup_httpd/"
 
 # 백업 파일 복원
 if [ -d "$BACKUP_DIR" ]; then
