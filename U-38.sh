@@ -28,9 +28,13 @@ BACKUP_DIR="/root/httpd_backup"
 mkdir -p "$BACKUP_DIR"
 for item in $UNWANTED_ITEMS
 do
-  if [ -d "$HTTPD_ROOT/$item" ] || [ -f "$HTTPD_ROOT/$item" ]; then
-    cp -r "$HTTPD_ROOT/$item" "$BACKUP_DIR"
-    INFO "$item이 $HTTPD_ROOT에서 $BACKUP_DIR로 백업되었습니다"
+  if [ -f "$HTTPD_ROOT" ]; then
+    if [ -d "$HTTPD_ROOT/$item" ] || [ -f "$HTTPD_ROOT/$item" ]; then
+      cp -r "$HTTPD_ROOT/$item" "$BACKUP_DIR"
+      INFO "$item이 $HTTPD_ROOT에서 $BACKUP_DIR로 백업되었습니다"
+    fi
+  else
+    INFO "$HTTPD_ROOT 을 찾을 수 없습니다"
   fi
 done
 
@@ -44,10 +48,14 @@ BACKUP_DIR="/root/httpd_backup"
 if [ -d "$BACKUP_DIR" ]; then
   for item in $UNWANTED_ITEMS
   do
-    if [ -d "$BACKUP_DIR/$item" ] || [ -f "$BACKUP_DIR/$item" ]; then
-      cp -r "$BACKUP_DIR/$item" "$HTTPD_ROOT"
-      INFO "$item이 $BACKUP_DIR에서 $HTTPD_ROOT로 복원되었습니다."
-    fi
+    if [ -f "$HTTPD_ROOT" ]; then
+      if [ -d "$BACKUP_DIR/$item" ] || [ -f "$BACKUP_DIR/$item" ]; then
+        cp -r "$BACKUP_DIR/$item" "$HTTPD_ROOT"
+        INFO "$item이 $BACKUP_DIR에서 $HTTPD_ROOT로 복원되었습니다."
+      fi
+    else
+    INFO "$HTTPD_ROOT 을 찾을 수 없습니다"
+    fi  
   done
 else
   WARN "백업 디렉터리 $BACKUP_DIR이 없습니다."
