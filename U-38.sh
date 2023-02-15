@@ -20,7 +20,7 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-ACKUP_DIR="/backup_invalid_owners"
+BACKUP_DIR="/backup_invalid_owners"
 BACKUP_FILE="apache_backup.tar.gz"
 HTTPD_ROOT="/etc/httpd/conf/"
 

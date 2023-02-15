@@ -56,10 +56,10 @@ done
 
 
 # Start vsftpd service
-sudo systemctl start vsftpd.service
+sudo service vsftpd start 
 
 # Start ftp service
-sudo systemctl start ftp.service
+sudo service ftp start 
 
 
 # 원본 파일 배열 설정
