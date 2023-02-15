@@ -1,7 +1,12 @@
 #!/bin/bash
 
+ 
+
 . function.sh
 
+ 
+
+ 
 
 BAR
 
@@ -18,8 +23,8 @@ EOF
 BAR
 
 # 변수 설정
-backup_dir="/path/to/backup/dir"
-source_dir="/home/user/"
+backup_dir="/path/backups/"
+source_dir="/home/adiosl/"
 
 # 백업 디렉토리(존재하지 않는 경우) 생성
 if [ ! -d "$backup_dir" ]; then
@@ -35,13 +40,12 @@ find / -type d -name ".*" ! -path "/run/user/1000/gvfs/*" -exec cp -r --parents 
 #--------------------------------------------------------------------------------------------------
 
 # 변수 설정
-backup_dir="/path/to/backup/dir"
-source_dir="/"
+backup_dir="/path/backups/"
+source_dir="/home/adiosl/"
 
 # 숨겨진 파일 및 디렉터리 복구
 rsync -a --delete "$backup_dir" "$source_dir"
 
-INFO "숨겨진 디렉토리 및 파일을 복구 완료"
 
 cat $result
 

@@ -26,17 +26,18 @@ TMP1=`SCRIPTNAME`.log
 
 # primary or minor numbers 없는 백업 장치 파일
 mkdir -p /root/device_files_backup
-find /dev -type f -exec ls -l {} \; | awk '$5 == "0" && $6 == "0" {print $9}' |
-for read file; do
+for file in $(find /dev -type f -exec ls -l {} \; | awk '$5 == "0" && $6 == "0" {print $9}')
+do
   if [ -b "$file" ]; then
     major=$(stat -c %t "$file")
     minor=$(stat -c %T "$file")
     if [ -z "$major" ] || [ -z "$minor" ]; then
-      # 장치 파일 백업
+      # device file backup
       cp -p "$file" /root/device_files_backup/
     fi
   fi
 done
+
 
 # INFO "primary / minor numbers 가 없는 장치 파일을 백업하였습니다."
 
