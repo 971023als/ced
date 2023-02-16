@@ -32,7 +32,7 @@ files=("/etc/httpd/conf/httpd.conf")
 # 백업 파일의 접두사 설정
 prefix="_backup_"
 
-# 현재 날짜와 시간을 알다
+# 현재 날짜와 시간
 current_time=$(date +%Y%m%d_%H%M%S)
 
 # 각 원본 파일을 반복합니다
